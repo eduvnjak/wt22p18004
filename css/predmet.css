@@ -4,7 +4,8 @@ body, #meni ul {
 
 #meni {
     background-color: #7fb77e;
-    margin: auto;
+    position: sticky;
+    top: 0;
 }
 
 #meni li {
