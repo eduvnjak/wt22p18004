@@ -27,3 +27,9 @@ body, #meni ul {
     padding: 0;
     display: inline-block;
 }
+.naziv_odsjeka {
+    font-size: xx-large;
+}
+.ciklus_godina {
+    font-size: x-large;
+}
