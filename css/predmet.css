@@ -1,0 +1,23 @@
+body, #meni ul {
+    margin: 0;
+}
+
+#meni {
+    background-color: #7fb77e;
+    margin: auto;
+}
+
+#meni li {
+    list-style: none;
+}
+
+#meni>ul>li {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px
+}
+
+#meni>ul {
+    padding: 0;
+    display: inline-block;
+}
