@@ -77,11 +77,22 @@ body,
     color: white;
     padding: 8px;
 }
+
 #meni a:hover {
     color: #27717c;
     background-color: white;
 }
-#meni>ul>li>a{
+
+#meni>ul>li>a {
     font-size: larger;
     text-transform: uppercase;
+}
+
+.menu_target::before {
+    display: block;
+    content: " ";
+    margin-top: -141px;
+    height: 141px;
+    visibility: hidden;
+    pointer-events: none;
 }
