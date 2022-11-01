@@ -32,10 +32,12 @@ body,
 
 .naziv_odsjeka {
     font-size: xx-large;
+    padding: 10px;
 }
 
 .ciklus_godina {
     font-size: x-large;
+    padding-left: 20px;
 }
 
 .predmet {
@@ -54,6 +56,7 @@ body,
     align-items: stretch;
     column-gap: 10px;
     row-gap: 10px;
+    padding: 20px;
 }
 
 .ikonica {
