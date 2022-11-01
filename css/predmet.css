@@ -62,9 +62,26 @@ body,
 .ikonica {
     font-size: xx-large;
 }
+
 .izborni {
     background-color: powderblue;
 }
+
 .ne_ide {
     background-color: gray;
+}
+
+#meni a {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+}
+#meni a:hover {
+    color: #27717c;
+    background-color: white;
+}
+#meni>ul>li>a{
+    font-size: larger;
+    text-transform: uppercase;
 }
