@@ -10,7 +10,7 @@ body,
 }
 
 #meni {
-    background-color: #7fb77e;
+    background-color: #27717c;
     position: sticky;
     top: 0;
 }
@@ -43,9 +43,9 @@ body,
 .predmet {
     text-align: center;
     width: 200px;
-    background-color: #F7F6DC;
+    background-color: white;
     border-radius: 8px;
-    border: 2px solid #FFC090;
+    border: 2px solid #0f2b2f;
     padding: 12px;
     box-sizing: border-box;
 }
@@ -61,4 +61,10 @@ body,
 
 .ikonica {
     font-size: xx-large;
+}
+.izborni {
+    background-color: powderblue;
+}
+.ne_ide {
+    background-color: gray;
 }
