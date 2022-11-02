@@ -2,6 +2,7 @@
 
 body {
     font-family: Ubuntu;
+    margin: 0;
 }
 
 table,
@@ -33,4 +34,34 @@ nije_uneseno {
 td,
 th {
     padding: 5px;
+}
+
+#naziv_predmeta::before {
+    content: "Predmet: ";
+}
+
+#naziv_ciklusa_studija::before {
+    content: "Ciklus studija: "
+}
+
+#godina_studija::before {
+    content: "Godina studija: "
+}
+
+#naziv_odsjeka::before {
+    content: "Odsjek: ";
+}
+
+#info_predmet>::before {
+    text-transform: uppercase;
+}
+
+#info_predmet {
+    background-color: #27717c;
+    color: white;
+    padding-left: 20px;
+}
+
+#info_predmet>div {
+    padding: 8px;
 }
