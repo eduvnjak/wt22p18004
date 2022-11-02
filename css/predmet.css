@@ -114,3 +114,22 @@ body,
         text-align: initial;
     }
 }
+
+@media screen and (max-width:466px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .naziv_odsjeka,
+    .ciklus_godina {
+        text-align: center;
+    }
+
+    .ciklus_godina {
+        padding-right: 20px;
+    }
+
+    .predmet {
+        width: auto;
+    }
+}
