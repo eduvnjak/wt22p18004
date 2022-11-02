@@ -1,0 +1,36 @@
+@import url(https://fonts.googleapis.com/css2?family=Ubuntu);
+
+body {
+    font-family: Ubuntu;
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.cas_vrsta {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+.nije_prisutan {
+    background-color: red;
+}
+
+.prisutan {
+    background-color: green;
+}
+
+.prisutan,
+.nije_prisutan,
+nije_uneseno {
+    height: 10px;
+}
+
+td,
+th {
+    padding: 5px;
+}
