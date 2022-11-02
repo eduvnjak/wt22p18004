@@ -84,15 +84,33 @@ body,
 }
 
 #meni>ul>li>a {
-    font-size: larger;
     text-transform: uppercase;
 }
 
-.menu_target::before {
-    display: block;
-    content: " ";
-    margin-top: -141px;
-    height: 141px;
-    visibility: hidden;
-    pointer-events: none;
+@media screen and (min-width: 1007px) {
+    .menu_target::before {
+        display: block;
+        content: " ";
+        margin-top: -141px;
+        height: 141px;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+@media screen and (max-width: 1006px) {
+    #meni {
+        position: static;
+        text-align: center;
+    }
+
+    #meni>ul>li {
+        display: block;
+        padding-left: 0;
+    }
+
+    #meni>ul {
+        display: inline-block;
+        text-align: initial;
+    }
 }
