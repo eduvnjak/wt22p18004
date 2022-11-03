@@ -5,13 +5,6 @@ body {
     margin: 0;
 }
 
-table,
-td,
-th {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
 .cas_vrsta {
     writing-mode: vertical-rl;
     text-orientation: upright;
@@ -29,11 +22,6 @@ th {
 .nije_prisutan,
 .nije_uneseno {
     height: 10px;
-}
-
-td,
-th {
-    padding: 5px;
 }
 
 #naziv_predmeta::before {
@@ -64,4 +52,57 @@ th {
 
 #info_predmet>div {
     padding: 8px;
+}
+
+#tabela_prisustvo {
+    padding: 20px;
+}
+
+#tabela_prisustvo th:first-of-type {
+    border-top-left-radius: 10px;
+}
+
+#tabela_prisustvo th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+#tabela_prisustvo tr:nth-last-of-type(2) td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+#tabela_prisustvo tr:nth-last-of-type(2) td:last-of-type {
+    border-bottom-right-radius: 10px;
+}
+
+#tabela_prisustvo tr:nth-child(4n)>td,
+#tabela_prisustvo tr:nth-child(1)>th {
+    background-color: #92D4DD;
+
+}
+
+#tabela_prisustvo tr:nth-child(4n+2)>td {
+    background-color: #D0ECF0;
+}
+
+#tabela_prisustvo td,
+#tabela_prisustvo th {
+    padding: 12px;
+}
+
+#tabela_prisustvo table {
+    border-collapse: collapse;
+}
+
+#tabela_prisustvo tr:nth-child(2n+3) td {
+    border: 1px solid black;
+    /* border-radius: 10px; */
+}
+
+#tabela_prisustvo tr th:last-of-type,
+#tabela_prisustvo tr:nth-child(2n+2) td:last-of-type {
+    width: 400px;
+}
+
+#tabela_prisustvo th {
+    text-align: start;
 }
