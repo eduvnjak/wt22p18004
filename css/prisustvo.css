@@ -10,18 +10,23 @@ body {
     text-orientation: upright;
 }
 
-.nije_prisutan {
+.nije_prisutan>div {
     background-color: red;
 }
 
-.prisutan {
+.prisutan>div {
     background-color: green;
 }
 
-.prisutan,
-.nije_prisutan,
-.nije_uneseno {
-    height: 10px;
+.nije_uneseno>div {
+    background-color: white;
+}
+
+.prisutan>div,
+.nije_prisutan>div,
+.nije_uneseno>div {
+    border-radius: 10px;
+    height: 30px;
 }
 
 #naziv_predmeta::before {
@@ -75,12 +80,14 @@ body {
 }
 
 #tabela_prisustvo tr:nth-child(4n)>td,
-#tabela_prisustvo tr:nth-child(1)>th {
+#tabela_prisustvo tr:nth-child(1)>th,
+#tabela_prisustvo tr:nth-child(4n+5)>td {
     background-color: #92D4DD;
 
 }
 
-#tabela_prisustvo tr:nth-child(4n+2)>td {
+#tabela_prisustvo tr:nth-child(4n+2)>td,
+#tabela_prisustvo tr:nth-child(4n+3)>td {
     background-color: #D0ECF0;
 }
 
@@ -93,11 +100,6 @@ body {
     border-collapse: collapse;
 }
 
-#tabela_prisustvo tr:nth-child(2n+3) td {
-    border: 1px solid black;
-    /* border-radius: 10px; */
-}
-
 #tabela_prisustvo tr th:last-of-type,
 #tabela_prisustvo tr:nth-child(2n+2) td:last-of-type {
     width: 400px;
@@ -105,4 +107,8 @@ body {
 
 #tabela_prisustvo th {
     text-align: start;
+}
+
+#tabela_prisustvo tr:nth-child(2n+3)>td {
+    padding: 3px 3px;
 }
