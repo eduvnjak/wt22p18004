@@ -112,3 +112,7 @@ body {
 #tabela_prisustvo tr:nth-child(2n+3)>td {
     padding: 3px 3px;
 }
+
+#tabela_prisustvo  {
+    overflow-x: auto;
+}
