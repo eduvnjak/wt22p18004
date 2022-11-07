@@ -100,10 +100,10 @@ body {
     border-collapse: collapse;
 }
 
-#tabela_prisustvo tr th:last-of-type,
-#tabela_prisustvo tr:nth-child(2n+2) td:last-of-type {
-    width: 400px;
-}
+/* #tabela_prisustvo tr th:nth-last-child(-n+7),
+#tabela_prisustvo tr:nth-child(2n+2) td:last-child {
+    padding: 6px;
+} */
 
 #tabela_prisustvo th {
     text-align: start;
@@ -113,6 +113,6 @@ body {
     padding: 3px 3px;
 }
 
-#tabela_prisustvo  {
+#tabela_prisustvo {
     overflow-x: auto;
 }
