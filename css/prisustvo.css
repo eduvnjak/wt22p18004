@@ -60,7 +60,7 @@ body {
 }
 
 #tabela_prisustvo {
-    padding: 20px;
+    padding: 20px 0px 20px 20px;
 }
 
 #tabela_prisustvo th:first-of-type {
@@ -115,4 +115,14 @@ body {
 
 #tabela_prisustvo {
     overflow-x: auto;
+}
+
+#tabela_prisustvo {
+    display: flex;
+    flex-direction: row;
+}
+
+#bugfix {
+    width: 20px;
+    min-width: 20px;
 }
