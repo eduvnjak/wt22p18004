@@ -91,8 +91,8 @@ body,
     .menu_target::before {
         display: block;
         content: " ";
-        margin-top: -141px;
-        height: 141px;
+        margin-top: -136px;
+        height: 136px;
         visibility: hidden;
         pointer-events: none;
     }
@@ -112,6 +112,11 @@ body,
     #meni>ul {
         display: inline-block;
         text-align: initial;
+    }
+
+    body>div {
+        min-width: 240px;
+        overflow-x: hidden;
     }
 }
 
@@ -136,9 +141,4 @@ body,
 
 .container {
     min-width: 200px;
-}
-
-body>div {
-    min-width: 240px;
-    overflow-x: hidden;
 }
