@@ -2,6 +2,26 @@ let TabelaPrisustvo = function (divRef, podaci) {
     divRef.innerHTML = "";
     //validacija podataka
 
+    // broj prisustva na predavanju/vjezbi je veci od broja predavanja/vjezbi sedmicno
+    // broj prisustva je manji od nule
+    for (const prisustvo of podaci.prisustva) {
+        if (prisustvo.predavanja < 0 || prisustvo.predavanja > podaci.brojPredavanjaSedmicno
+            || prisustvo.vjezbe < 0 || prisustvo.vjezbe > podaci.brojVjezbiSedmicno) {
+            divRef.innerHTML = "Podaci o prisustvu nisu validni!";
+            return;
+        }
+    }
+    // isti student ima dva ili vise unosa prisustva za istu sedmicu
+    // const prisustva = podaci.prisustva.map(
+    //     prisustvo => {
+    //         return { sedmica: prisustvo.sedmica, prisustvo: prisustvo.index };
+    //     }
+    // );
+    // if (prisustva.length != new Set(prisustva).size) {
+    //     divRef.innerHTML = "Podaci o prisustvu nisu validni!";
+    //     return;
+    // }
+    // console.log(prisustva);
     //ako nisu validni zavrsi
     const table = document.createElement("table");
     const tableBody = document.createElement("tbody");
