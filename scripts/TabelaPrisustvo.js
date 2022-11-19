@@ -27,6 +27,15 @@ let TabelaPrisustvo = function (divRef, podaci) {
         divRef.innerHTML = "Podaci o prisustvu nisu validni!";
         return;
     }
+    // ne postoje podaci za studenta koji nije u listi studenata 
+    const prisustvaIndexi = new Set(podaci.prisustva.map(x => x.index));
+    const studentiIndexi = new Set(podaci.studenti.map(x => x.index));
+    for (const iterator of prisustvaIndexi) {
+        if (!studentiIndexi.has(iterator)) {
+            divRef.innerHTML = "Podaci o prisustvu nisu validni!";
+            return;
+        }
+    }
     //ako nisu validni zavrsi
     const table = document.createElement("table");
     const tableBody = document.createElement("tbody");
