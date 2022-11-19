@@ -22,6 +22,11 @@ let TabelaPrisustvo = function (divRef, podaci) {
             }
         }
     }
+    // ne postoje dva ili više studenta sa istim indeksom
+    if (podaci.studenti.length != new Set(podaci.studenti.map(x => x.index)).size) {
+        divRef.innerHTML = "Podaci o prisustvu nisu validni!";
+        return;
+    }
     //ako nisu validni zavrsi
     const table = document.createElement("table");
     const tableBody = document.createElement("tbody");
