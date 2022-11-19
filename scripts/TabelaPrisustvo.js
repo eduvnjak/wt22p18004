@@ -2,8 +2,8 @@ let TabelaPrisustvo = function (divRef, podaci) {
     divRef.innerHTML = "";
     //validacija podataka
 
-    // broj prisustva na predavanju/vjezbi je veci od broja predavanja/vjezbi sedmicno
-    // broj prisustva je manji od nule
+    // broj prisustva na predavanju/vjezbi nije veci od broja predavanja/vjezbi sedmicno
+    // broj prisustva nije manji od nule
     for (const prisustvo of podaci.prisustva) {
         if (prisustvo.predavanja < 0 || prisustvo.predavanja > podaci.brojPredavanjaSedmicno
             || prisustvo.vjezbe < 0 || prisustvo.vjezbe > podaci.brojVjezbiSedmicno) {
@@ -11,17 +11,17 @@ let TabelaPrisustvo = function (divRef, podaci) {
             return;
         }
     }
-    // isti student ima dva ili vise unosa prisustva za istu sedmicu
-    // const prisustva = podaci.prisustva.map(
-    //     prisustvo => {
-    //         return { sedmica: prisustvo.sedmica, prisustvo: prisustvo.index };
-    //     }
-    // );
-    // if (prisustva.length != new Set(prisustva).size) {
-    //     divRef.innerHTML = "Podaci o prisustvu nisu validni!";
-    //     return;
-    // }
-    // console.log(prisustva);
+    // isti student nema vise od jednog unosa prisustva za jednu sedmicu
+    for (let i = 0; i < podaci.prisustva.length - 1; i++) {
+        const prisustvo1 = podaci.prisustva[i];
+        for (let j = i + 1; j < podaci.prisustva.length; j++) {
+            const prisustvo2 = podaci.prisustva[j];
+            if (prisustvo1.sedmica == prisustvo2.sedmica && prisustvo1.index == prisustvo2.index) {
+                divRef.innerHTML = "Podaci o prisustvu nisu validni!";
+                return;
+            }
+        }
+    }
     //ako nisu validni zavrsi
     const table = document.createElement("table");
     const tableBody = document.createElement("tbody");
