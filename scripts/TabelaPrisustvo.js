@@ -36,6 +36,17 @@ let TabelaPrisustvo = function (divRef, podaci) {
             return;
         }
     }
+    // ne postoji sedmica između dvije sedmice, u kojima je uneseno prisustvo barem jednom studentu, u kojoj nema priustva za bar jednog studenta
+    const sedmice = new Set(podaci.prisustva.map(x => x.sedmica));
+    const sedmiceSortirane = Array.from(sedmice).sort()
+    const pocetna = sedmiceSortirane[0];
+    for (let i = 0; i < sedmiceSortirane.length; i++) {
+        const element = sedmiceSortirane[i];
+        if (pocetna + i != element) {
+            divRef.innerHTML = "Podaci o prisustvu nisu validni!";
+            return;
+        }
+    }
     //ako nisu validni zavrsi
     const table = document.createElement("table");
     const tableBody = document.createElement("tbody");
