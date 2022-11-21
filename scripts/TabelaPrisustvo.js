@@ -119,6 +119,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     //headeri za sedmice 
     headerRow.append(headerCellIme, headerCellIndex)
     const posljednjaUnesenaSedmica = sedmiceSortirane[sedmiceSortirane.length - 1];
+    var trenutnaSedmica = posljednjaUnesenaSedmica;
     for (let sedmica = 1; sedmica <= 15; sedmica++) {
         const headerCellSedmice = document.createElement("th");
         if (sedmica <= posljednjaUnesenaSedmica) {
@@ -196,7 +197,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     }
     table.appendChild(tableBody);
     divRef.append(table);
-    
+
     if (posljednjaUnesenaSedmica == 15) {
         const radiusElement = document.querySelector("table tr:last-of-type td:last-of-type");
         radiusElement.classList.add("border_radius");
@@ -204,5 +205,44 @@ let TabelaPrisustvo = function (divRef, podaci) {
         const radiusElement = document.querySelector("table tr:nth-last-of-type(2) td:last-of-type");
         radiusElement.classList.add("border_radius");
     }
+
+    let sljedecaSedmica = function () {
+        if (trenutnaSedmica == posljednjaUnesenaSedmica) return;
+        trenutnaSedmica++;
+    }
+
+    let prethodnaSedmica = function () {
+        console.log("testis unus testis nullus")
+
+        if (trenutnaSedmica == 1) return;
+        trenutnaSedmica--;
+        const redoviTabele = document.querySelectorAll("table tr");
+        console.log(redoviTabele.length);
+        if (!redoviTabele.length) return;
+        const ukupnoCasova = podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno;
+        (redoviTabele[0].childNodes[trenutnaSedmica + 2]).removeAttribute("colspan");
+        (redoviTabele[0].childNodes[trenutnaSedmica + 1]).setAttribute("colspan", ukupnoCasova);
+        for (let i = 1; i < redoviTabele.length; i += 2) {
+            const redGore = redoviTabele[i].childNodes;
+            (redGore[trenutnaSedmica + 1 + ukupnoCasova]).after(redGore[trenutnaSedmica + 1]);
+            redGore[trenutnaSedmica + ukupnoCasova + 1].textContent = dajProcentualnoPrisustvo(redGore[1].textContent, trenutnaSedmica + 1);
+            const redDole = redoviTabele[i + 1].childNodes;
+            for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
+                redDole[i].className = "";
+                redDole[i].classList.add(dajKlasuZaCelijuPredavanja(redGore[1].textContent, trenutnaSedmica, i));
+            }
+            for (let i = podaci.brojPredavanjaSedmicno; i < ukupnoCasova; i++) {
+                redDole[i].className = "";
+                redDole[i].classList.add(dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, i - podaci.brojPredavanjaSedmicno));
+            }
+        }
+    }
+
+
+    return {
+        sljedecaSedmica: sljedecaSedmica,
+        prethodnaSedmica: prethodnaSedmica
+    }
+
 };
 export default TabelaPrisustvo;
