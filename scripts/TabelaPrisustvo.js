@@ -35,6 +35,12 @@ let TabelaPrisustvo = function (divRef, podaci) {
                 return null;
         }
     }
+    function dajProcentualnoPrisustvo(index, sedmica) {
+        const prisustvo = podaci.prisustva.find(x => x.sedmica == sedmica && x.index == index);
+        if (!prisustvo) return "0%";
+        const procenat = ((prisustvo.predavanja * 1.0 + prisustvo.vjezbe) / (podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno)) * 100;
+        return Math.round(procenat) + "%";
+    }
     divRef.innerHTML = "";
     //validacija podataka
 
@@ -132,8 +138,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
         for (let sedmica = 1; sedmica < posljednjaUnesenaSedmica; sedmica++) {
             const cellPrisustvo = document.createElement("td");
             cellPrisustvo.setAttribute("rowspan", 2)
-            cellPrisustvo.textContent = "0%";
-            // iznad placeholder, treba pozvati neku fun koja vrati prisustvo
+            cellPrisustvo.textContent = dajProcentualnoPrisustvo(student.index, sedmica);
             studentRow.append(cellPrisustvo);
         }
         for (let i = 1; i <= podaci.brojPredavanjaSedmicno; i++) {
@@ -148,7 +153,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
             cellPrisustvo.textContent = "V" + i;
             studentRow.append(cellPrisustvo);
         }
-        
+
         if (posljednjaUnesenaSedmica < 15) {
             const cellOstatak = document.createElement("td");
             cellOstatak.setAttribute("rowspan", 2);
