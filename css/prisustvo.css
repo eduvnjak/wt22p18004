@@ -76,9 +76,9 @@ body {
     border-bottom-left-radius: 10px;
 }
 
-#tabela_prisustvo tr:nth-last-of-type(2) td:last-of-type {
+/* #tabela_prisustvo tr:nth-last-of-type(2) td:last-of-type {
     border-bottom-right-radius: 10px;
-}
+} */
 
 #tabela_prisustvo tr:nth-child(4n)>td,
 #tabela_prisustvo tr:nth-child(1)>th,
@@ -126,4 +126,8 @@ body {
 #bugfix {
     width: 20px;
     min-width: 20px;
+}
+
+.border_radius {
+    border-bottom-right-radius: 10px;
 }

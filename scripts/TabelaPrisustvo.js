@@ -124,8 +124,8 @@ let TabelaPrisustvo = function (divRef, podaci) {
         if (sedmica <= posljednjaUnesenaSedmica) {
             headerCellSedmice.textContent = dajRimskiBroj(sedmica);
         } else if (sedmica == posljednjaUnesenaSedmica + 1) {
-            headerCellSedmice.textContent = dajRimskiBroj(sedmica) ;
-            if(sedmica < 14) {
+            headerCellSedmice.textContent = dajRimskiBroj(sedmica);
+            if (sedmica < 14) {
                 headerCellSedmice.textContent += "-XV";
             }
         }
@@ -196,5 +196,13 @@ let TabelaPrisustvo = function (divRef, podaci) {
     }
     table.appendChild(tableBody);
     divRef.append(table);
+    
+    if (posljednjaUnesenaSedmica == 15) {
+        const radiusElement = document.querySelector("table tr:last-of-type td:last-of-type");
+        radiusElement.classList.add("border_radius");
+    } else {
+        const radiusElement = document.querySelector("table tr:nth-last-of-type(2) td:last-of-type");
+        radiusElement.classList.add("border_radius");
+    }
 };
 export default TabelaPrisustvo;
