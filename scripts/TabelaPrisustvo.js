@@ -41,6 +41,20 @@ let TabelaPrisustvo = function (divRef, podaci) {
         const procenat = ((prisustvo.predavanja * 1.0 + prisustvo.vjezbe) / (podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno)) * 100;
         return Math.round(procenat) + "%";
     }
+    function dajKlasuZaCelijuPredavanja(index, sedmica, trenutnaCelija) {
+        const prisustvo = podaci.prisustva.find(x => x.sedmica == sedmica && x.index == index);
+        if (!prisustvo) return "nije_uneseno";
+        if (trenutnaCelija < prisustvo.predavanja)
+            return "prisutan";
+        return "nije_prisutan";
+    }
+    function dajKlasuZaCelijuVjezbi(index, sedmica, trenutnaCelija) {
+        const prisustvo = podaci.prisustva.find(x => x.sedmica == sedmica && x.index == index);
+        if (!prisustvo) return "nije_uneseno";
+        if (trenutnaCelija < prisustvo.vjezbe)
+            return "prisutan";
+        return "nije_prisutan";
+    }
     divRef.innerHTML = "";
     //validacija podataka
 
@@ -163,11 +177,17 @@ let TabelaPrisustvo = function (divRef, podaci) {
         tableBody.append(studentRow);
 
         const kvadratiRow = document.createElement("tr");
-        //placeholder; ovdje fino obojiti
-        for (let i = 0; i < podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno; i++) {
+
+        for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
             const celija = document.createElement("td");
             celija.append(document.createElement("div"));
-            celija.classList.add("prisutan");
+            celija.classList.add(dajKlasuZaCelijuPredavanja(student.index, posljednjaUnesenaSedmica, i));
+            kvadratiRow.append(celija);
+        }
+        for (let i = 0; i < podaci.brojVjezbiSedmicno; i++) {
+            const celija = document.createElement("td");
+            celija.append(document.createElement("div"));
+            celija.classList.add(dajKlasuZaCelijuVjezbi(student.index, posljednjaUnesenaSedmica, i));
             kvadratiRow.append(celija);
         }
         tableBody.append(kvadratiRow);
