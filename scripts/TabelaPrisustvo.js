@@ -121,16 +121,17 @@ let TabelaPrisustvo = function (divRef, podaci) {
     const posljednjaUnesenaSedmica = sedmiceSortirane[sedmiceSortirane.length - 1];
     for (let sedmica = 1; sedmica <= 15; sedmica++) {
         const headerCellSedmice = document.createElement("th");
-        let headerCellSedmiceText = document.createTextNode("");
         if (sedmica <= posljednjaUnesenaSedmica) {
-            headerCellSedmiceText = document.createTextNode(dajRimskiBroj(sedmica));
+            headerCellSedmice.textContent = dajRimskiBroj(sedmica);
         } else if (sedmica == posljednjaUnesenaSedmica + 1) {
-            headerCellSedmiceText = document.createTextNode(dajRimskiBroj(sedmica) + "-XV");
+            headerCellSedmice.textContent = dajRimskiBroj(sedmica) ;
+            if(sedmica < 14) {
+                headerCellSedmice.textContent += "-XV";
+            }
         }
         if (sedmica == posljednjaUnesenaSedmica) {
             headerCellSedmice.setAttribute("colspan", podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno);
         }
-        headerCellSedmice.appendChild(headerCellSedmiceText);
         headerRow.append(headerCellSedmice);
     }
 
