@@ -209,6 +209,27 @@ let TabelaPrisustvo = function (divRef, podaci) {
     let sljedecaSedmica = function () {
         if (trenutnaSedmica == posljednjaUnesenaSedmica) return;
         trenutnaSedmica++;
+        const redoviTabele = document.querySelectorAll("table tr");
+        console.log(redoviTabele.length);
+        if (!redoviTabele.length) return;
+        const ukupnoCasova = podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno;
+        (redoviTabele[0].childNodes[trenutnaSedmica]).removeAttribute("colspan");
+        (redoviTabele[0].childNodes[trenutnaSedmica + 1]).setAttribute("colspan", ukupnoCasova);
+        for (let i = 1; i < redoviTabele.length; i += 2) {
+            const redGore = redoviTabele[i].childNodes;
+            (redGore[trenutnaSedmica]).before(redGore[trenutnaSedmica + ukupnoCasova]);
+            redGore[trenutnaSedmica].textContent = dajProcentualnoPrisustvo(redGore[1].textContent, trenutnaSedmica - 1);
+            const redDole = redoviTabele[i + 1].childNodes;
+            for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
+                redDole[i].className = "";
+                redDole[i].classList.add(dajKlasuZaCelijuPredavanja(redGore[1].textContent, trenutnaSedmica, i));
+            }
+            for (let i = podaci.brojPredavanjaSedmicno; i < ukupnoCasova; i++) {
+                redDole[i].className = "";
+                redDole[i].classList.add(dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, i - podaci.brojPredavanjaSedmicno));
+            }
+        }
+
     }
 
     let prethodnaSedmica = function () {
