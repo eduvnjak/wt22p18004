@@ -198,13 +198,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     table.appendChild(tableBody);
     divRef.append(table);
 
-    if (posljednjaUnesenaSedmica == 15) {
-        const radiusElement = document.querySelector("table tr:last-of-type td:last-of-type");
-        radiusElement.classList.add("border_radius");
-    } else {
-        const radiusElement = document.querySelector("table tr:nth-last-of-type(2) td:last-of-type");
-        radiusElement.classList.add("border_radius");
-    }
+    fixDonjiDesniRub(trenutnaSedmica);
 
     let sljedecaSedmica = function () {
         if (trenutnaSedmica == posljednjaUnesenaSedmica) return;
@@ -219,6 +213,9 @@ let TabelaPrisustvo = function (divRef, podaci) {
             const redGore = redoviTabele[i].childNodes;
             (redGore[trenutnaSedmica]).before(redGore[trenutnaSedmica + ukupnoCasova]);
             redGore[trenutnaSedmica].textContent = dajProcentualnoPrisustvo(redGore[1].textContent, trenutnaSedmica - 1);
+            if (trenutnaSedmica == 15) {
+                redGore[trenutnaSedmica].classList = "";
+            }
             const redDole = redoviTabele[i + 1].childNodes;
             for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
                 redDole[i].className = "";
@@ -229,7 +226,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
                 redDole[i].classList.add(dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, i - podaci.brojPredavanjaSedmicno));
             }
         }
-
+        fixDonjiDesniRub(trenutnaSedmica);
     }
 
     let prethodnaSedmica = function () {
@@ -257,6 +254,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
                 redDole[i].classList.add(dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, i - podaci.brojPredavanjaSedmicno));
             }
         }
+        fixDonjiDesniRub(trenutnaSedmica);
     }
 
 
@@ -267,3 +265,13 @@ let TabelaPrisustvo = function (divRef, podaci) {
 
 };
 export default TabelaPrisustvo;
+
+function fixDonjiDesniRub(trenutnaSedmica) {
+    if (trenutnaSedmica == 15) {
+        const radiusElement = document.querySelector("table tr:last-of-type td:last-of-type");
+        radiusElement.classList.add("border_radius");
+    } else {
+        const radiusElement = document.querySelector("table tr:nth-last-of-type(2) td:last-of-type");
+        radiusElement.classList.add("border_radius");
+    }
+}
