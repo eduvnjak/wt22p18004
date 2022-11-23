@@ -1,4 +1,3 @@
-import TabelaPrisustvo from './TabelaPrisustvo.js';
 let div = document.getElementById("tabela_container");
 console.log("TU");
 //instanciranje

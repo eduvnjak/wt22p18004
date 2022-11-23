@@ -285,7 +285,6 @@ let TabelaPrisustvo = function (divRef, podaci) {
     }
 
 };
-export default TabelaPrisustvo;
 
 function fixDonjiDesniRub(trenutnaSedmica) {
     if (trenutnaSedmica == 15) {
