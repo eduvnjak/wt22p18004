@@ -140,7 +140,6 @@ let TabelaPrisustvo = function (divRef, podaci) {
 
     for (let student of podaci.studenti) {
         const studentRow = document.createElement("tr");
-        console.log(student.ime + " " + student.index);
 
         const cellIme = document.createElement("td");
         cellIme.setAttribute("rowspan", 2)
@@ -196,15 +195,24 @@ let TabelaPrisustvo = function (divRef, podaci) {
 
     }
     table.appendChild(tableBody);
-    divRef.append(table);
+    table.setAttribute("id", "tabela_prisustvo");
+
+    const divWrap = document.createElement("div");
+    divWrap.style.display = "flex";
+    const bugfix = document.createElement("div");
+    bugfix.setAttribute("id", "bugfix");
+    bugfix.style.minWidth = "20px";
+
+    divWrap.append(table, bugfix);
+
+    divRef.append(divWrap);
 
     fixDonjiDesniRub(trenutnaSedmica);
 
     let sljedecaSedmica = function () {
         if (trenutnaSedmica == posljednjaUnesenaSedmica) return;
         trenutnaSedmica++;
-        const redoviTabele = document.querySelectorAll("table tr");
-        console.log(redoviTabele.length);
+        const redoviTabele = document.querySelectorAll("#tabela_prisustvo tr");
         if (!redoviTabele.length) return;
         const ukupnoCasova = podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno;
         (redoviTabele[0].childNodes[trenutnaSedmica]).removeAttribute("colspan");
@@ -230,12 +238,9 @@ let TabelaPrisustvo = function (divRef, podaci) {
     }
 
     let prethodnaSedmica = function () {
-        console.log("testis unus testis nullus")
-
         if (trenutnaSedmica == 1) return;
         trenutnaSedmica--;
-        const redoviTabele = document.querySelectorAll("table tr");
-        console.log(redoviTabele.length);
+        const redoviTabele = document.querySelectorAll("#tabela_prisustvo tr");
         if (!redoviTabele.length) return;
         const ukupnoCasova = podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno;
         (redoviTabele[0].childNodes[trenutnaSedmica + 2]).removeAttribute("colspan");
@@ -256,7 +261,23 @@ let TabelaPrisustvo = function (divRef, podaci) {
         }
         fixDonjiDesniRub(trenutnaSedmica);
     }
+    const dugme_nazad = document.createElement("button");
+    dugme_nazad.setAttribute("id", "dugme_nazad");
+    // dugme_nazad.textContent = "Prethodna sedmica";
+    const ikonica_nazad = document.createElement("i");
+    ikonica_nazad.classList.add("fa-solid", "fa-arrow-left", "fa-2x");
+    dugme_nazad.appendChild(ikonica_nazad);
 
+    const dugme_naprijed = document.createElement("button");
+    dugme_naprijed.setAttribute("id", "dugme_naprijed");
+    // dugme_naprijed.textContent = "Sljedeća sedmica";
+    const ikonica_naprijed = document.createElement("i");
+    ikonica_naprijed.classList.add("fa-solid", "fa-arrow-right", "fa-2x");
+    dugme_naprijed.appendChild(ikonica_naprijed);
+    divRef.append(dugme_nazad, dugme_naprijed);
+
+    document.getElementById("dugme_nazad").addEventListener("click", prethodnaSedmica);
+    document.getElementById("dugme_naprijed").addEventListener("click", sljedecaSedmica);
 
     return {
         sljedecaSedmica: sljedecaSedmica,
@@ -268,10 +289,10 @@ export default TabelaPrisustvo;
 
 function fixDonjiDesniRub(trenutnaSedmica) {
     if (trenutnaSedmica == 15) {
-        const radiusElement = document.querySelector("table tr:last-of-type td:last-of-type");
+        const radiusElement = document.querySelector("#tabela_prisustvo tr:last-of-type td:last-of-type");
         radiusElement.classList.add("border_radius");
     } else {
-        const radiusElement = document.querySelector("table tr:nth-last-of-type(2) td:last-of-type");
+        const radiusElement = document.querySelector("#tabela_prisustvo tr:nth-last-of-type(2) td:last-of-type");
         radiusElement.classList.add("border_radius");
     }
 }

@@ -60,7 +60,7 @@ body {
     padding: 8px;
 }
 
-#tabela_prisustvo {
+#tabela_container {
     padding: 20px 0px 20px 20px;
 }
 
@@ -97,7 +97,7 @@ body {
     padding: 12px;
 }
 
-#tabela_prisustvo table {
+#tabela_prisustvo {
     border-collapse: collapse;
 }
 
@@ -114,11 +114,11 @@ body {
     padding: 3px 3px;
 }
 
-#tabela_prisustvo {
+#tabela_container {
     overflow-x: auto;
 }
 
-#tabela_prisustvo {
+/* #tabela_prisustvo {
     display: flex;
     flex-direction: row;
 }
@@ -126,8 +126,15 @@ body {
 #bugfix {
     width: 20px;
     min-width: 20px;
-}
+} */
 
 .border_radius {
     border-bottom-right-radius: 10px;
+}
+
+#dugme_nazad,
+#dugme_naprijed {
+    width: 100px;
+    margin-top: 10px;
+    margin-left: 10px;
 }
