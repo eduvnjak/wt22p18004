@@ -37,7 +37,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     }
     function dajProcentualnoPrisustvo(index, sedmica) {
         const prisustvo = podaci.prisustva.find(x => x.sedmica == sedmica && x.index == index);
-        if (!prisustvo) return "0%";
+        if (!prisustvo) return  `\xA0\xA0\xA0\xA0\xA0`;
         const procenat = ((prisustvo.predavanja * 1.0 + prisustvo.vjezbe) / (podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno)) * 100;
         return Math.round(procenat) + "%";
     }
