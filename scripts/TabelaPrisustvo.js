@@ -118,7 +118,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     headerCellIndex.appendChild(headerCellIndexText);
     //headeri za sedmice 
     headerRow.append(headerCellIme, headerCellIndex)
-    const posljednjaUnesenaSedmica = sedmiceSortirane[sedmiceSortirane.length - 1];
+    const posljednjaUnesenaSedmica = sedmiceSortirane[sedmiceSortirane.length - 1] ?? 1;
     var trenutnaSedmica = posljednjaUnesenaSedmica;
     for (let sedmica = 1; sedmica <= 15; sedmica++) {
         const headerCellSedmice = document.createElement("th");
