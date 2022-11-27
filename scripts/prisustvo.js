@@ -46,7 +46,7 @@ const podaci = {
     "predmet": "Razvoj mobilnih aplikacija",
     "brojPredavanjaSedmicno": 3,
     "brojVjezbiSedmicno": 5
-}
+};
 let div = document.getElementById("tabela_container");
 //instanciranje
 let prisustvo = TabelaPrisustvo(div, podaci);

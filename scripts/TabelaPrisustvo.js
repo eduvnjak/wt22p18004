@@ -117,7 +117,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     const headerCellIndexText = document.createTextNode("Index");
     headerCellIndex.appendChild(headerCellIndexText);
     //headeri za sedmice 
-    headerRow.append(headerCellIme, headerCellIndex)
+    headerRow.append(headerCellIme, headerCellIndex);
     const posljednjaUnesenaSedmica = sedmiceSortirane[sedmiceSortirane.length - 1] ?? 1;
     var trenutnaSedmica = posljednjaUnesenaSedmica;
     for (let sedmica = 1; sedmica <= 15; sedmica++) {
@@ -142,17 +142,17 @@ let TabelaPrisustvo = function (divRef, podaci) {
         const studentRow = document.createElement("tr");
 
         const cellIme = document.createElement("td");
-        cellIme.setAttribute("rowspan", 2)
+        cellIme.setAttribute("rowspan", 2);
         cellIme.textContent = student.ime;
 
         const cellIndex = document.createElement("td");
-        cellIndex.setAttribute("rowspan", 2)
+        cellIndex.setAttribute("rowspan", 2);
         cellIndex.textContent = student.index;
 
         studentRow.append(cellIme, cellIndex);
         for (let sedmica = 1; sedmica < posljednjaUnesenaSedmica; sedmica++) {
             const cellPrisustvo = document.createElement("td");
-            cellPrisustvo.setAttribute("rowspan", 2)
+            cellPrisustvo.setAttribute("rowspan", 2);
             cellPrisustvo.textContent = dajProcentualnoPrisustvo(student.index, sedmica);
             studentRow.append(cellPrisustvo);
         }
@@ -235,7 +235,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
             }
         }
         fixDonjiDesniRub(trenutnaSedmica);
-    }
+    };
 
     let prethodnaSedmica = function () {
         if (trenutnaSedmica == 1) return;
@@ -260,7 +260,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
             }
         }
         fixDonjiDesniRub(trenutnaSedmica);
-    }
+    };
     const dugme_nazad = document.createElement("button");
     dugme_nazad.setAttribute("id", "dugme_nazad");
     // dugme_nazad.textContent = "Prethodna sedmica";
@@ -282,7 +282,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     return {
         sljedecaSedmica: sljedecaSedmica,
         prethodnaSedmica: prethodnaSedmica
-    }
+    };
 
 };
 
