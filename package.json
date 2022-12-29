@@ -1,0 +1,22 @@
+{
+  "name": "wt22p18004",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://eduvnjak1@bitbucket.org/eduvnjak1/wt22p18004.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/eduvnjak1/wt22p18004/issues"
+  },
+  "homepage": "https://bitbucket.org/eduvnjak1/wt22p18004#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
