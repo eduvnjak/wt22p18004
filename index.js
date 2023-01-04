@@ -63,12 +63,30 @@ app.post('/logout', function (req, res) {
 })
 app.get('/loginStatus', function (req, res) {
     res.json({ nastavnik: req.session.username ?? "null" });
-})
+});
 app.get('/predmeti', function (req, res) {
     if (req.session.username) {
         res.json({ predmeti: req.session.predmeti });
     } else {
         res.status(401).json({ greska: "Nastavnik nije loginovan" });
     }
-})
+});
+app.get('/predmeti/:NAZIV', function (req, res) {
+    //da li treba provjeriti jel korisnik ulogovan i da li je predmet u sesiji
+    //da li je potrebno decode route param
+    if (req.session.username) {
+        if (req.session.predmeti.includes(req.params.NAZIV)) {
+            fs.readFile("data/prisustva.json", (err, data) => {
+                if (err) res.status(500);
+                const prisustvaObjekat = JSON.parse(data);
+                const prisustvo = prisustvaObjekat.find((obj) => obj.predmet == req.params.NAZIV);
+                res.json(prisustvo);
+            })
+        } else {
+            res.status(403).json({ greska: `Niste nastavnik na predmetu ${req.params.NAZIV}` });
+        }
+    } else {
+        res.status(401).json({ greska: "Nastavnik nije loginovan" });
+    }
+});
 app.listen(3000);
