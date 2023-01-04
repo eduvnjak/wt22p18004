@@ -22,7 +22,7 @@ app.use(session({
 app.post('/login', function (req, res) {
     //provjeri return statuse
     if (req.body.username && req.body.password) {
-        console.log("poslani parametri");
+        // console.log("poslani parametri");
         fs.readFile("data/nastavnici.json", (err, data) => {
             if (err) {
                 res.status(500).json({ poruka: "Neuspješna prijava" });
@@ -63,5 +63,12 @@ app.post('/logout', function (req, res) {
 })
 app.get('/loginStatus', function (req, res) {
     res.json({ nastavnik: req.session.username ?? "null" });
+})
+app.get('/predmeti', function (req, res) {
+    if (req.session.username) {
+        res.json({ predmeti: req.session.predmeti });
+    } else {
+        res.status(401).json({ greska: "Nastavnik nije loginovan" });
+    }
 })
 app.listen(3000);
