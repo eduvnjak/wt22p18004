@@ -17,7 +17,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-
+// !!!provjeri ove relativne linkove !! sta su tackice!!
 
 app.post('/login', function (req, res) {
     //provjeri return statuse
@@ -79,7 +79,8 @@ app.get('/predmeti/:NAZIV', function (req, res) {
             fs.readFile("data/prisustva.json", (err, data) => {
                 if (err) res.status(500);
                 const prisustvaObjekat = JSON.parse(data);
-                const prisustvo = prisustvaObjekat.find((obj) => obj.predmet == req.params.NAZIV);
+                var prisustvo = prisustvaObjekat.find((obj) => obj.predmet == req.params.NAZIV);
+                if (prisustvo === undefined) prisustvo = null;
                 res.json(prisustvo);
             })
         } else {
