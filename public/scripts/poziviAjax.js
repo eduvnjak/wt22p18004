@@ -4,7 +4,37 @@ const PoziviAjax = (() => {
     // svaki callback kao parametre ima error i data, error je null ako je status 200 i data je tijelo odgovora
     // ako postoji greška poruka se prosljeđuje u error parametar callback-a, a data je tada null
     function impl_getPredmet(naziv, fnCallback) {
+        var ajax = new XMLHttpRequest();
 
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4) {
+                if (ajax.status == 200) {
+                    fnCallback(null, JSON.parse(ajax.response));
+                } else {
+                    fnCallback(JSON.parse(ajax.response), null)
+                }
+            }
+        }
+
+        ajax.open("GET", `http://localhost:3000/predmeti/${naziv}`, true);
+        ajax.send();
+    }
+    // vraća listu predmeta za loginovanog nastavnika ili grešku da nastavnik nije loginovan
+    function impl_getPredmeti(fnCallback) {
+        var ajax = new XMLHttpRequest();
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4) {
+                if (ajax.status == 200) {
+                    fnCallback(null, JSON.parse(ajax.response));
+                } else {
+                    fnCallback(JSON.parse(ajax.response), null)
+                }
+            }
+        }
+
+        ajax.open("GET", "http://localhost:3000/predmeti", true);
+        ajax.send();
     }
     function impl_postLogin(username, password, fnCallback) {
         // console.log(`stiglo {username: ${username}, password: ${password}}`)
@@ -36,6 +66,7 @@ const PoziviAjax = (() => {
         postLogin: impl_postLogin,
         postLogout: impl_postLogout,
         getPredmet: impl_getPredmet,
+        getPredmeti: impl_getPredmeti,
         postPrisustvo: impl_postPrisustvo
     };
 })();
