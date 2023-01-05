@@ -12,6 +12,9 @@ body,
 #meni {
     background-color: #27717c;
     padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
 #meni li {
@@ -20,18 +23,22 @@ body,
 
 #meni>ul {
     padding: 0;
-    /* display: inline-block; */
 }
 
-#meni li {
-    display: inline-block;
+#meni li,
+#logout {
     text-decoration: none;
     color: white;
     padding: 8px;
 }
 
+#meni li {
+    display: inline-block;
+}
+
 #meni li:hover,
-#meni .odabran {
+#meni .odabran,
+#logout:hover {
     color: #27717c;
     background-color: white;
 }
@@ -39,3 +46,14 @@ body,
 #message {
     padding: 20px;
 }
+
+#logout {
+    text-transform: uppercase;
+    min-width: fit-content;
+    height: fit-content;
+}
+
+/* #meni li:hover,
+#logout:hover {
+    cursor: default;
+} */

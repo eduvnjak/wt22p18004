@@ -15,7 +15,7 @@ const PoziviAjax = (() => {
                 }
             }
         }
-
+        //da li ovdje treba encode uri
         ajax.open("GET", `http://localhost:3000/predmeti/${naziv}`, true);
         ajax.send();
     }
@@ -55,6 +55,21 @@ const PoziviAjax = (() => {
         ajax.send(JSON.stringify({ username: username, password: password }));
     }
     function impl_postLogout(fnCallback) {
+        var ajax = new XMLHttpRequest();
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4) {
+                if (ajax.status == 200) {
+                    fnCallback(null, JSON.parse(ajax.response));
+                } else {
+                    fnCallback(JSON.parse(ajax.response), null)
+                }
+            }
+        }
+
+        ajax.open("POST", "http://localhost:3000/logout", true);
+        // ajax.setRequestHeader("Content-Type", "application/json");
+        ajax.send();
 
     }
     //prisustvo ima oblik {sedmica:N,predavanja:P,vjezbe:V}
