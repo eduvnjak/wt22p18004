@@ -53,7 +53,7 @@ body,
     height: fit-content;
 }
 
-/* #meni li:hover,
+#meni li:hover,
 #logout:hover {
     cursor: default;
-} */
+}
