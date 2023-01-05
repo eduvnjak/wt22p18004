@@ -24,6 +24,14 @@ const callback2 = function (error, data) {
     }
 }
 const prikaziTabeluPrisustva = (predmet) => {
+    const meni = document.getElementById("meni");
+    for (const li of meni.children[0].children) {
+        if (li.textContent == predmet) {
+            li.classList.add("odabran");
+        } else {
+            li.classList.remove("odabran");
+        }
+    }
     PoziviAjax.getPredmet(predmet, callback2);
 }
 PoziviAjax.getPredmeti(callback1);

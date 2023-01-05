@@ -1,0 +1,41 @@
+@import url(https://fonts.googleapis.com/css2?family=Ubuntu);
+
+body {
+    font-family: Ubuntu;
+}
+
+body,
+#meni ul {
+    margin: 0;
+}
+
+#meni {
+    background-color: #27717c;
+    padding-left: 20px;
+}
+
+#meni li {
+    list-style: none;
+}
+
+#meni>ul {
+    padding: 0;
+    /* display: inline-block; */
+}
+
+#meni li {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+}
+
+#meni li:hover,
+#meni .odabran {
+    color: #27717c;
+    background-color: white;
+}
+
+#message {
+    padding: 20px;
+}
