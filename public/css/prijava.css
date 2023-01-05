@@ -1,0 +1,52 @@
+@import url(https://fonts.googleapis.com/css2?family=Ubuntu);
+
+body {
+    font-family: Ubuntu;
+    margin: 0;
+}
+
+form {
+    margin: auto;
+    width: fit-content;
+    background-color: #27717c;
+    color: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#message {
+    margin: 8px auto;
+    padding: 8px;
+    width: fit-content;
+    background-color: rgba(255, 0, 0, .75);
+    border-radius: 10px;
+    color: white;
+}
+
+#prijavaButton {
+    font-family: inherit;
+    display: block;
+    padding: 8px 16px;
+    background-color: white;
+    color: #27717c;
+    text-transform: uppercase;
+    border: 0;
+    border-radius: 5px;
+    font-size: larger;
+}
+
+form>* {
+    margin: 8px auto;
+}
+label {
+    width: 100px;
+    display: inline-block;
+}
+input {
+    width: 200px;
+    border-radius: 8px;
+}
+.hidden{
+    display: none;
+}

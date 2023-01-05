@@ -3,7 +3,7 @@
 
 <head>
     <title>Prijava</title>
-    <!-- <link rel="stylesheet" href="../css/predmet.css"> -->
+    <link rel="stylesheet" href="../css/prijava.css">
     <script src="../scripts/poziviAjax.js" defer></script>
     <script src="../scripts/prijava.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,11 +12,11 @@
 
 <body>
     <form action="">
-        <label>Username: <input type="text" id="username"> </label><br>
-        <label>Password: <input type="password" id="password"> </label><br>
+        <label for="username">Username: </label><input type="text" id="username"> <br>
+        <label for="password">Password: </label><input type="password" id="password"> <br>
         <button id="prijavaButton" type="button">Prijava</button>
     </form>
-    <div id="message"> </div>
+    <div id="message" class="hidden"> </div>
 </body>
 
 </html>
