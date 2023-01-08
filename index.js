@@ -98,7 +98,7 @@ app.get('/predmeti/:NAZIV', function (req, res) {
 app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
     //da li loginovani nastavnik mora biti nastavnik na predmetu
     //da li mora postojati student sa indexom (iako se nece ispravno tabela nacrtati)
-    if (!req.body.sedmica || !req.body.predavanja || !req.body.vjezbe) {
+    if (req.body.sedmica == undefined || req.body.predavanja == undefined || req.body.vjezbe == undefined) {
         res.status(400).json({ greska: "Nepravilno tijelo zahtjeva" });
         return;
     }
