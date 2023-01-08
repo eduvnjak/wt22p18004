@@ -17,7 +17,7 @@ const callback2 = function (error, data) {
     } else {
         const tabelaContainer = document.getElementById("tabela_container");
         if (data) {
-            TabelaPrisustvo(tabelaContainer, data);
+            TabelaPrisustvo(tabelaContainer, data, callback2);
         } else {
             tabelaContainer.innerHTML = "Nema podataka za ovaj predmet"
         }

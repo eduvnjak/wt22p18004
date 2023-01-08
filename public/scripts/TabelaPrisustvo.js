@@ -1,4 +1,4 @@
-let TabelaPrisustvo = function (divRef, podaci) {
+let TabelaPrisustvo = function (divRef, podaci, callback = null) {
     function dajRimskiBroj(sedmica) {
         switch (sedmica) {
             case 1:
@@ -26,7 +26,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
             case 12:
                 return "XII";
             case 13:
-                return "XII";
+                return "XIII";
             case 14:
                 return "XIV";
             case 15:
@@ -37,7 +37,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
     }
     function dajProcentualnoPrisustvo(index, sedmica) {
         const prisustvo = podaci.prisustva.find(x => x.sedmica == sedmica && x.index == index);
-        if (!prisustvo) return  `\xA0\xA0\xA0\xA0\xA0`;
+        if (!prisustvo) return `\xA0\xA0\xA0\xA0\xA0`;
         const procenat = ((prisustvo.predavanja * 1.0 + prisustvo.vjezbe) / (podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno)) * 100;
         return Math.round(procenat) + "%";
     }
@@ -54,6 +54,34 @@ let TabelaPrisustvo = function (divRef, podaci) {
         if (trenutnaCelija < prisustvo.vjezbe)
             return "prisutan";
         return "nije_prisutan";
+    }
+    function dajPrisustvoObjekat(index, sedmica) {
+        const prisustvo = podaci.prisustva.find(x => x.sedmica == sedmica && x.index == index);
+        return {
+            sedmica: sedmica,
+            predavanja: prisustvo ? prisustvo.predavanja : 0,
+            vjezbe: prisustvo ? prisustvo.vjezbe : 0
+        }
+    }
+    function promijeniPrisustvo(naziv, index, prisustvoObjekat, casVrsta, trenutniStil) {
+        if (!(casVrsta == "P" || casVrsta == "V")) return;
+        if (!(trenutniStil == "nije_uneseno" || trenutniStil == "prisutan" || trenutniStil == "nije_prisutan")) return;
+
+        if (trenutniStil == "nije_uneseno" || trenutniStil == "nije_prisutan") {
+            if (casVrsta == "P") {
+                prisustvoObjekat.predavanja++;
+            } else {
+                prisustvoObjekat.vjezbe++;
+            }
+        } else {
+            if (casVrsta == "P") {
+                prisustvoObjekat.predavanja--;
+            } else {
+                prisustvoObjekat.vjezbe--;
+            }
+        }
+        console.log(prisustvoObjekat);
+        PoziviAjax.postPrisustvo(naziv, index, prisustvoObjekat, callback);
     }
     divRef.innerHTML = "";
     //validacija podataka
@@ -182,13 +210,17 @@ let TabelaPrisustvo = function (divRef, podaci) {
         for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
             const celija = document.createElement("td");
             celija.append(document.createElement("div"));
-            celija.classList.add(dajKlasuZaCelijuPredavanja(student.index, posljednjaUnesenaSedmica, i));
+            const klasa = dajKlasuZaCelijuPredavanja(student.index, posljednjaUnesenaSedmica, i);
+            celija.classList.add(klasa);
+            if (callback) celija.addEventListener("click", promijeniPrisustvo.bind(this, podaci.predmet, student.index, dajPrisustvoObjekat(student.index, trenutnaSedmica), "P", klasa));
             kvadratiRow.append(celija);
         }
         for (let i = 0; i < podaci.brojVjezbiSedmicno; i++) {
             const celija = document.createElement("td");
             celija.append(document.createElement("div"));
-            celija.classList.add(dajKlasuZaCelijuVjezbi(student.index, posljednjaUnesenaSedmica, i));
+            const klasa = dajKlasuZaCelijuVjezbi(student.index, posljednjaUnesenaSedmica, i);
+            celija.classList.add(klasa);
+            if (callback) celija.addEventListener("click", promijeniPrisustvo.bind(this, podaci.predmet, student.index, dajPrisustvoObjekat(student.index, trenutnaSedmica), "V", klasa));
             kvadratiRow.append(celija);
         }
         tableBody.append(kvadratiRow);
@@ -225,13 +257,23 @@ let TabelaPrisustvo = function (divRef, podaci) {
                 redGore[trenutnaSedmica].classList = "";
             }
             const redDole = redoviTabele[i + 1].childNodes;
-            for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
-                redDole[i].className = "";
-                redDole[i].classList.add(dajKlasuZaCelijuPredavanja(redGore[1].textContent, trenutnaSedmica, i));
+            for (let j = 0; j < podaci.brojPredavanjaSedmicno; j++) {
+                redoviTabele[i + 1].replaceChild(redDole[j].cloneNode(true), redDole[j]);
+                redDole[j].className = "";
+                const klasa = dajKlasuZaCelijuPredavanja(redGore[1].textContent, trenutnaSedmica, j);
+                redDole[j].classList.add(klasa);
+                if (callback) {
+                    redDole[j].addEventListener("click", promijeniPrisustvo.bind(this, podaci.predmet, redGore[1].textContent, dajPrisustvoObjekat(redGore[1].textContent, trenutnaSedmica), "P", klasa));
+                }
             }
-            for (let i = podaci.brojPredavanjaSedmicno; i < ukupnoCasova; i++) {
-                redDole[i].className = "";
-                redDole[i].classList.add(dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, i - podaci.brojPredavanjaSedmicno));
+            for (let j = podaci.brojPredavanjaSedmicno; j < ukupnoCasova; j++) {
+                redoviTabele[i + 1].replaceChild(redDole[j].cloneNode(true), redDole[j]);
+                redDole[j].className = "";
+                const klasa = dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, j - podaci.brojPredavanjaSedmicno);
+                redDole[j].classList.add(klasa);
+                if (callback) {
+                    redDole[j].addEventListener("click", promijeniPrisustvo.bind(this, podaci.predmet, redGore[1].textContent, dajPrisustvoObjekat(redGore[1].textContent, trenutnaSedmica), "V", klasa));
+                }
             }
         }
         fixDonjiDesniRub(trenutnaSedmica);
@@ -250,13 +292,23 @@ let TabelaPrisustvo = function (divRef, podaci) {
             (redGore[trenutnaSedmica + 1 + ukupnoCasova]).after(redGore[trenutnaSedmica + 1]);
             redGore[trenutnaSedmica + ukupnoCasova + 1].textContent = dajProcentualnoPrisustvo(redGore[1].textContent, trenutnaSedmica + 1);
             const redDole = redoviTabele[i + 1].childNodes;
-            for (let i = 0; i < podaci.brojPredavanjaSedmicno; i++) {
-                redDole[i].className = "";
-                redDole[i].classList.add(dajKlasuZaCelijuPredavanja(redGore[1].textContent, trenutnaSedmica, i));
+            for (let j = 0; j < podaci.brojPredavanjaSedmicno; j++) {
+                redoviTabele[i + 1].replaceChild(redDole[j].cloneNode(true), redDole[j]);
+                redDole[j].className = "";
+                const klasa = dajKlasuZaCelijuPredavanja(redGore[1].textContent, trenutnaSedmica, j);
+                redDole[j].classList.add(klasa);
+                if (callback) {
+                    redDole[j].addEventListener("click", promijeniPrisustvo.bind(this, podaci.predmet, redGore[1].textContent, dajPrisustvoObjekat(redGore[1].textContent, trenutnaSedmica), "P", klasa));
+                }
             }
-            for (let i = podaci.brojPredavanjaSedmicno; i < ukupnoCasova; i++) {
-                redDole[i].className = "";
-                redDole[i].classList.add(dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, i - podaci.brojPredavanjaSedmicno));
+            for (let j = podaci.brojPredavanjaSedmicno; j < ukupnoCasova; j++) {
+                redoviTabele[i + 1].replaceChild(redDole[j].cloneNode(true), redDole[j]);
+                redDole[j].className = "";
+                const klasa = dajKlasuZaCelijuVjezbi(redGore[1].textContent, trenutnaSedmica, j - podaci.brojPredavanjaSedmicno);
+                redDole[j].classList.add(klasa);
+                if (callback) {
+                    redDole[j].addEventListener("click", promijeniPrisustvo.bind(this, podaci.predmet, redGore[1].textContent, dajPrisustvoObjekat(redGore[1].textContent, trenutnaSedmica), "V", klasa));
+                }
             }
         }
         fixDonjiDesniRub(trenutnaSedmica);
