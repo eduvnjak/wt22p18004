@@ -36,7 +36,7 @@ app.post('/login', function (req, res) {
                 // console.log("nastavnik pronađen" + JSON.stringify(nastavnikObjekat));
                 bcrypt.compare(req.body.password, nastavnikObjekat.nastavnik.password_hash, function (err, result) {
                     if (err) {
-                        res.status(500).json({ poruka: "Neuspješna prijava" });
+                        res.status(500).json({ poruka: "Neuspješna prijava" }); //ovo sredi
                     }
                     if (result) {
                         req.session.username = req.body.username;
@@ -52,7 +52,7 @@ app.post('/login', function (req, res) {
             }
         });
     } else {
-        console.log("nisu poslani parametri");
+        // console.log("nisu poslani parametri");
         res.status(400).json({ poruka: "Neuspješna prijava" });
     }
 });
@@ -61,6 +61,7 @@ app.post('/logout', function (req, res) {
     res.json({ poruka: "Uspješan logout" })
     //ovako ili podatke (ili session?) na null
 })
+//ovo skloni na kraju
 app.get('/loginStatus', function (req, res) {
     res.json({ nastavnik: req.session.username ?? "null" });
 });
@@ -77,8 +78,8 @@ app.get('/predmeti/:NAZIV', function (req, res) {
     if (req.session.username) {
         if (req.session.predmeti.includes(req.params.NAZIV)) {
             fs.readFile("data/prisustva.json", (err, data) => {
-                if (err) res.status(500);
-                const prisustvaObjekat = JSON.parse(data);
+                if (err) res.status(500); //ovo ispravi
+                const prisustvaObjekat = JSON.parse(data); //promijeni ime ovog objekta
                 var prisustvo = prisustvaObjekat.find((obj) => obj.predmet == req.params.NAZIV);
                 if (prisustvo === undefined) prisustvo = null;
                 res.json(prisustvo);
@@ -89,5 +90,58 @@ app.get('/predmeti/:NAZIV', function (req, res) {
     } else {
         res.status(401).json({ greska: "Nastavnik nije loginovan" });
     }
+});
+app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
+    //da li loginovani nastavnik mora biti nastavnik na predmetu
+    //da li mora postojati student sa indexom (iako se nece ispravno tabela nacrtati)
+    if (!req.body.sedmica || !req.body.predavanja || !req.body.vjezbe) {
+        res.status(400).json({ greska: "Nepravilno tijelo zahtjeva" });
+        return;
+    }
+    fs.readFile("data/prisustva.json", (err, data) => {
+        if (err) {
+            res.status(500).json({ greska: "Greška pri čitanju podataka" });
+            return;
+        }
+        const svaPrisustva = JSON.parse(data);
+        const prisustvoObjekat = svaPrisustva.find((obj) => obj.predmet == req.params.NAZIV);
+        if (prisustvoObjekat === undefined) {
+            res.status(400).json({ greska: `Ne postoji predmet ${req.params.NAZIV}` }); //ovdje mozda 404
+            return;
+        }
+        if (req.body.sedmica < 1 || req.body.sedmica > 15) {
+            res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
+            return;
+        }
+        if (req.body.predavanja < 0 || req.body.predavanja > prisustvoObjekat.brojPredavanjaSedmicno) {
+            res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
+            return;
+        }
+        if (req.body.vjezbe < 0 || req.body.vjezbe > prisustvoObjekat.brojVjezbiSedmicno) {
+            res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
+            return;
+        }
+        const prisustvo = prisustvoObjekat.prisustva.find((obj) => obj.index == req.params.index && obj.sedmica == req.body.sedmica);
+        if (prisustvo === undefined) {
+            const novoPrisustvo = {
+                sedmica: req.body.sedmica,
+                predavanja: req.body.predavanja,
+                vjezbe: req.body.vjezbe,
+                index: req.params.index
+            }
+            prisustvoObjekat.prisustva.push(novoPrisustvo);
+        } else {
+            prisustvo.predavanja = req.body.predavanja;
+            prisustvo.vjezbe = req.body.vjezbe;
+        }
+        // console.log(JSON.stringify(svaPrisustva));
+        fs.writeFile("data/prisustva.json", JSON.stringify(svaPrisustva), (err) => {
+            if (err) {
+                res.status(500).json({ greska: "Greška pri pisanju podataka" });
+                return;
+            }
+            res.json(prisustvoObjekat);
+        })
+    })
 });
 app.listen(3000);
