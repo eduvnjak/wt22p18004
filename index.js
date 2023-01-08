@@ -131,7 +131,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
                 sedmica: req.body.sedmica,
                 predavanja: req.body.predavanja,
                 vjezbe: req.body.vjezbe,
-                index: req.params.index
+                index: parseInt(req.params.index)
             }
             prisustvoObjekat.prisustva.push(novoPrisustvo);
         } else {
