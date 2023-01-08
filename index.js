@@ -36,7 +36,8 @@ app.post('/login', function (req, res) {
                 // console.log("nastavnik pronađen" + JSON.stringify(nastavnikObjekat));
                 bcrypt.compare(req.body.password, nastavnikObjekat.nastavnik.password_hash, function (err, result) {
                     if (err) {
-                        res.status(500).json({ poruka: "Neuspješna prijava" }); //ovo sredi
+                        res.status(500).json({ poruka: "Neuspješna prijava" });
+                        return;
                     }
                     if (result) {
                         req.session.username = req.body.username;
@@ -62,9 +63,9 @@ app.post('/logout', function (req, res) {
     //ovako ili podatke (ili session?) na null
 })
 //ovo skloni na kraju
-app.get('/loginStatus', function (req, res) {
-    res.json({ nastavnik: req.session.username ?? "null" });
-});
+// app.get('/loginStatus', function (req, res) {
+//     res.json({ nastavnik: req.session.username ?? "null" });
+// });
 app.get('/predmeti', function (req, res) {
     if (req.session.username) {
         res.json({ predmeti: req.session.predmeti });
@@ -78,11 +79,14 @@ app.get('/predmeti/:NAZIV', function (req, res) {
     if (req.session.username) {
         if (req.session.predmeti.includes(req.params.NAZIV)) {
             fs.readFile("data/prisustva.json", (err, data) => {
-                if (err) res.status(500); //ovo ispravi
-                const prisustvaObjekat = JSON.parse(data); //promijeni ime ovog objekta
-                var prisustvo = prisustvaObjekat.find((obj) => obj.predmet == req.params.NAZIV);
-                if (prisustvo === undefined) prisustvo = null;
-                res.json(prisustvo);
+                if (err) {
+                    res.status(500).json({ greska: "Greška pri čitanju podataka" });
+                    return;
+                }
+                const svaPrisustva = JSON.parse(data); //promijeni ime ovog objekta
+                var prisustvoObjekat = svaPrisustva.find((obj) => obj.predmet == req.params.NAZIV);
+                if (prisustvoObjekat === undefined) prisustvoObjekat = null;
+                res.json(prisustvoObjekat);
             })
         } else {
             res.status(403).json({ greska: `Niste nastavnik na predmetu ${req.params.NAZIV}` });
