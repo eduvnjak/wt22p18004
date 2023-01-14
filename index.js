@@ -20,7 +20,6 @@ app.use('/icons', express.static('public/icons'));
 app.use('/scripts', express.static('public/scripts'));
 
 app.post('/login', function (req, res) {
-    //provjeri return statuse
     if (req.body.username && req.body.password) {
         // console.log("poslani parametri");
         fs.readFile("data/nastavnici.json", (err, data) => {
@@ -44,12 +43,12 @@ app.post('/login', function (req, res) {
                         req.session.predmeti = nastavnikObjekat.predmeti;
                         res.json({ poruka: "Uspješna prijava" });
                     } else {
-                        res.status(401).json({ poruka: "Neuspješna prijava" });
+                        res.status(403).json({ poruka: "Neuspješna prijava" });
 
                     }
                 })
             } else {
-                res.status(401).json({ poruka: "Neuspješna prijava" });
+                res.status(403).json({ poruka: "Neuspješna prijava" });
             }
         });
     } else {
@@ -82,7 +81,7 @@ app.get('/predmeti', function (req, res) {
     if (req.session.username) {
         res.json({ predmeti: req.session.predmeti });
     } else {
-        res.status(401).json({ greska: "Nastavnik nije loginovan" });
+        res.status(403).json({ greska: "Nastavnik nije loginovan" });
     }
 });
 app.get('/predmeti/:NAZIV', function (req, res) {
@@ -104,7 +103,7 @@ app.get('/predmeti/:NAZIV', function (req, res) {
             res.status(403).json({ greska: `Niste nastavnik na predmetu ${req.params.NAZIV}` });
         }
     } else {
-        res.status(401).json({ greska: "Nastavnik nije loginovan" });
+        res.status(403).json({ greska: "Nastavnik nije loginovan" });
     }
 });
 app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
