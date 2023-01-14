@@ -14,9 +14,10 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(express.static('public'))
-app.use(express.static('./public/html'))
-// !!!provjeri ove relativne linkove !! sta su tackice!!
+app.use(express.static('public/html'));
+app.use('/css', express.static('public/css'));
+app.use('/icons', express.static('public/icons'));
+app.use('/scripts', express.static('public/scripts'));
 
 app.post('/login', function (req, res) {
     //provjeri return statuse
