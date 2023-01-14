@@ -85,7 +85,6 @@ app.get('/predmeti', function (req, res) {
     }
 });
 app.get('/predmeti/:NAZIV', function (req, res) {
-    //da li treba provjeriti jel korisnik ulogovan i da li je predmet u sesiji
     //da li je potrebno decode route param
     if (req.session.username) {
         if (req.session.predmeti.includes(req.params.NAZIV)) {
@@ -94,7 +93,7 @@ app.get('/predmeti/:NAZIV', function (req, res) {
                     res.status(500).json({ greska: "Greška pri čitanju podataka" });
                     return;
                 }
-                const svaPrisustva = JSON.parse(data); //promijeni ime ovog objekta
+                const svaPrisustva = JSON.parse(data);
                 var prisustvoObjekat = svaPrisustva.find((obj) => obj.predmet == req.params.NAZIV);
                 if (prisustvoObjekat === undefined) prisustvoObjekat = null;
                 res.json(prisustvoObjekat);
@@ -107,8 +106,15 @@ app.get('/predmeti/:NAZIV', function (req, res) {
     }
 });
 app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
-    //da li loginovani nastavnik mora biti nastavnik na predmetu
     //da li mora postojati student sa indexom (iako se nece ispravno tabela nacrtati)
+    if (!req.session.username) {
+        res.status(403).json({ greska: "Nastavnik nije loginovan" });
+        return;
+    }
+    if (!req.session.predmeti.includes(req.params.NAZIV)) {
+        res.status(403).json({ greska: `Niste nastavnik na predmetu ${req.params.NAZIV}` });
+        return;
+    }
     if (req.body.sedmica == undefined || req.body.predavanja == undefined || req.body.vjezbe == undefined) {
         res.status(400).json({ greska: "Nepravilno tijelo zahtjeva" });
         return;
