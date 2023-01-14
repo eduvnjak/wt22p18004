@@ -6,17 +6,16 @@ const bcrypt = require('bcrypt');
 
 const app = express();
 
-app.use(express.static('public'))
-app.use(express.static('./public/html'))
-
 app.use(bodyParser.json());
 
-//provjeri ove opcije
 app.use(session({
     secret: 'tajna sifra',
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }));
+
+app.use(express.static('public'))
+app.use(express.static('./public/html'))
 // !!!provjeri ove relativne linkove !! sta su tackice!!
 
 app.post('/login', function (req, res) {
@@ -63,9 +62,21 @@ app.post('/logout', function (req, res) {
     //ovako ili podatke (ili session?) na null
 })
 //ovo skloni na kraju
-// app.get('/loginStatus', function (req, res) {
-//     res.json({ nastavnik: req.session.username ?? "null" });
+// app.get('/sessionStatus', function (req, res) {
+//     // res.json({ nastavnik: req.session.username ?? "null" });
+//     res.write(JSON.stringify(req.sessionStore));
+//     res.write("\n\r" + JSON.stringify(req.session.maxAge));
+//     res.end("\n\r" + JSON.stringify(req.session));
 // });
+// app.get('/random', function (req, res) {
+//     console.log(req.sessionID)
+//     if (req.sessionID in req.sessionStore.sessions) {
+//         res.json({ text: "poznat" });
+//     }
+//     else {
+//         res.json({ text: "NEpoznat" });
+//     }
+// })
 app.get('/predmeti', function (req, res) {
     if (req.session.username) {
         res.json({ predmeti: req.session.predmeti });
