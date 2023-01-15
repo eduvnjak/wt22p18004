@@ -106,7 +106,6 @@ app.get('/predmeti/:NAZIV', function (req, res) {
     })
 });
 app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
-    //da li mora postojati student sa indexom (iako se nece ispravno tabela nacrtati)
     if (!req.session.username) {
         res.status(403).json({ greska: "Nastavnik nije loginovan" });
         return;
@@ -128,6 +127,10 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
         const prisustvoObjekat = svaPrisustva.find((obj) => obj.predmet == req.params.NAZIV);
         if (prisustvoObjekat === undefined) {
             res.status(400).json({ greska: `Ne postoji predmet ${req.params.NAZIV}` }); //ovdje mozda 404
+            return;
+        }
+        if (prisustvoObjekat.studenti.find((student) => student.index === parseInt(req.params.index)) === undefined) {
+            res.status(400).json({ greska: `Ne postoji student sa indexom ${req.params.index} na predmetu ${req.params.NAZIV}` });
             return;
         }
         if (req.body.sedmica < 1 || req.body.sedmica > 15) {
