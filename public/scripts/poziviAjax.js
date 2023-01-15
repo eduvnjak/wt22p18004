@@ -15,8 +15,7 @@ const PoziviAjax = (() => {
                 }
             }
         }
-        //da li ovdje treba encode uri
-        ajax.open("GET", `http://localhost:3000/predmeti/${naziv}`, true);
+        ajax.open("GET", `http://localhost:3000/predmeti/${encodeURIComponent(naziv)}`, true);
         ajax.send();
     }
     // vraća listu predmeta za loginovanog nastavnika ili grešku da nastavnik nije loginovan
@@ -74,8 +73,8 @@ const PoziviAjax = (() => {
     }
     //prisustvo ima oblik {sedmica:N,predavanja:P,vjezbe:V}
     function impl_postPrisustvo(naziv, index, prisustvo, fnCallback) {
-        console.log(`${naziv} ${index}`);
-        console.log(prisustvo);
+        // console.log(`${naziv} ${index}`);
+        // console.log(prisustvo);
         var ajax = new XMLHttpRequest();
 
         ajax.onreadystatechange = function () {
@@ -88,7 +87,7 @@ const PoziviAjax = (() => {
             }
         }
 
-        ajax.open("POST", `http://localhost:3000/prisustvo/predmet/${naziv}/student/${index}`, true);
+        ajax.open("POST", `http://localhost:3000/prisustvo/predmet/${encodeURIComponent(naziv)}/student/${encodeURIComponent(index)}`, true);
         ajax.setRequestHeader("Content-Type", "application/json");
         ajax.send(JSON.stringify(prisustvo));
     }
