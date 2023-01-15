@@ -9,5 +9,17 @@ const callback = function (error, data) {
         window.location.replace("http://localhost:3000/predmeti.html");
     }
 }
-
-prijavaButton.addEventListener("click", () => { PoziviAjax.postLogin(document.getElementById("username").value, document.getElementById("password").value, callback) });
+function login() {
+    PoziviAjax.postLogin(document.getElementById("username").value, document.getElementById("password").value, callback);
+}
+prijavaButton.addEventListener("click", login);
+document.getElementById("username").addEventListener("keyup", (event) => {
+    if (event.key === 'Enter') {
+        login();
+    }
+})
+document.getElementById("password").addEventListener("keyup", (event) => {
+    if (event.key === 'Enter') {
+        login();
+    }
+})
