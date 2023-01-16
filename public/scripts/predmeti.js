@@ -35,17 +35,5 @@ const prikaziTabeluPrisustva = (predmet) => {
     }
     PoziviAjax.getPredmet(predmet, callback2);
 }
-const callback3 = function (error, data) {
-    if (error) {
-        document.getElementById("message").innerHTML = error;
-    } else {
-        window.location.replace("http://localhost:3000/prijava.html");
-    }
-}
-
-const logoutDugme = document.getElementById("logout");
-logoutDugme.addEventListener("click", () => {
-    PoziviAjax.postLogout(callback3);
-})
 
 PoziviAjax.getPredmeti(callback1);

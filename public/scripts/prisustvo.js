@@ -51,7 +51,4 @@ let div = document.getElementById("tabela_container");
 //instanciranje
 let prisustvo = TabelaPrisustvo(div, podaci);
 
-for (const div of document.getElementById("info_predmet").childNodes) {
-    div.textContent = "";
-}
 document.getElementById("naziv_predmeta").textContent = podaci.predmet;

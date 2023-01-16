@@ -46,7 +46,7 @@ body {
     content: "Odsjek: ";
 }
 
-#info_predmet>::before {
+#info_predmet ::before {
     text-transform: uppercase;
 }
 
@@ -54,9 +54,13 @@ body {
     background-color: #27717c;
     color: white;
     padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: space-between;
+
 }
 
-#info_predmet>div {
+#info_predmet div {
     padding: 8px;
 }
 
@@ -137,4 +141,20 @@ body {
     width: 100px;
     margin-top: 10px;
     margin-left: 10px;
+}
+
+#logout {
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+    text-transform: uppercase;
+    min-width: fit-content;
+    height: fit-content;
+
+}
+
+#logout:hover {
+    cursor: default;
+    color: #27717c;
+    background-color: white;
 }
