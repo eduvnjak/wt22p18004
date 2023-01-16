@@ -1,5 +1,6 @@
 const callback1 = function (error, data) {
     if (error) {
+        document.getElementById("logout").innerHTML = "Log in";
         document.getElementById("message").innerHTML = error.greska;
     } else {
         const meni = document.getElementById("meni");
