@@ -11,6 +11,7 @@ const callback = function (error, data) {
 function login() {
     PoziviAjax.postLogin(document.getElementById("username").value, document.getElementById("password").value, callback);
 }
+
 prijavaButton.addEventListener("click", login);
 document.getElementById("username").addEventListener("keyup", (event) => {
     if (event.key === 'Enter') {
@@ -20,5 +21,11 @@ document.getElementById("username").addEventListener("keyup", (event) => {
 document.getElementById("password").addEventListener("keyup", (event) => {
     if (event.key === 'Enter') {
         login();
+    }
+})
+
+PoziviAjax.getPredmeti((error, data) => {
+    if (data) {
+        window.location.replace("http://localhost:3000/predmeti.html");
     }
 })
