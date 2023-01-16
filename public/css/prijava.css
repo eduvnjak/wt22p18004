@@ -15,7 +15,7 @@ form {
     margin-top: 20px;
 }
 
-#message {
+#messageContainer {
     margin: 8px auto;
     padding: 8px;
     width: fit-content;
@@ -39,14 +39,21 @@ form {
 form>* {
     margin: 8px auto;
 }
+
 label {
     width: 100px;
     display: inline-block;
 }
+
 input {
     width: 200px;
     border-radius: 8px;
 }
-.hidden{
+
+.hidden {
     display: none;
+}
+
+img {
+    vertical-align: middle;
 }

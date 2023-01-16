@@ -1,9 +1,8 @@
 const prijavaButton = document.getElementById("prijavaButton");
 const callback = function (error, data) {
     if (error) {
-        const poruka = document.getElementById("message");
-        poruka.innerHTML = error.poruka;
-        poruka.classList.remove("hidden");
+        document.getElementById("message").innerHTML = error.poruka;
+        document.getElementById("messageContainer").classList.remove("hidden");
     } else {
         // window.location.href = "http://localhost:3000/predmeti.html"
         window.location.replace("http://localhost:3000/predmeti.html");
