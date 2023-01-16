@@ -2,15 +2,15 @@
     {
         "studenti": [
             {
-                "ime": "Neko Nekic",
+                "ime": "Student 1",
                 "index": 12345
             },
             {
-                "ime": "Drugi Neko",
+                "ime": "Student 2",
                 "index": 12346
             },
             {
-                "ime": "Neko 2",
+                "ime": "Student 3",
                 "index": 12347
             }
         ],
@@ -18,7 +18,7 @@
             {
                 "sedmica": 13,
                 "predavanja": 2,
-                "vjezbe": 1,
+                "vjezbe": 2,
                 "index": 12345
             },
             {
@@ -41,13 +41,215 @@
             },
             {
                 "sedmica": 15,
-                "predavanja": 2,
-                "vjezbe": 3,
+                "predavanja": 1,
+                "vjezbe": 1,
                 "index": 12346
+            },
+            {
+                "sedmica": 12,
+                "predavanja": 2,
+                "vjezbe": 1,
+                "index": 12345
+            },
+            {
+                "sedmica": 15,
+                "predavanja": 0,
+                "vjezbe": 2,
+                "index": 12345
+            },
+            {
+                "sedmica": 15,
+                "predavanja": 1,
+                "vjezbe": 2,
+                "index": 12347
+            },
+            {
+                "sedmica": 14,
+                "predavanja": 1,
+                "vjezbe": 1,
+                "index": 12347
+            },
+            {
+                "sedmica": 13,
+                "predavanja": 1,
+                "vjezbe": 0,
+                "index": 12347
+            },
+            {
+                "sedmica": 11,
+                "predavanja": 3,
+                "vjezbe": 4,
+                "index": 12346
+            },
+            {
+                "sedmica": 12,
+                "predavanja": 1,
+                "vjezbe": 0,
+                "index": 12346
+            },
+            {
+                "sedmica": 12,
+                "predavanja": 0,
+                "vjezbe": 1,
+                "index": 12347
             }
         ],
         "predmet": "Razvoj mobilnih aplikacija",
         "brojPredavanjaSedmicno": 3,
         "brojVjezbiSedmicno": 5
+    },
+    {
+        "studenti": [
+            {
+                "ime": "Student 1",
+                "index": 12345
+            },
+            {
+                "ime": "Student 2",
+                "index": 12346
+            },
+            {
+                "ime": "Student 3",
+                "index": 12347
+            }
+        ],
+        "prisustva": [
+            {
+                "sedmica": 1,
+                "predavanja": 2,
+                "vjezbe": 2,
+                "index": 12345
+            },
+            {
+                "sedmica": 2,
+                "predavanja": 3,
+                "vjezbe": 1,
+                "index": 12346
+            }
+        ],
+        "predmet": "Web tehnologije",
+        "brojPredavanjaSedmicno": 3,
+        "brojVjezbiSedmicno": 2
+    },
+    {
+        "studenti": [
+            {
+                "ime": "Student 4",
+                "index": 12348
+            },
+            {
+                "ime": "Student 5",
+                "index": 12349
+            },
+            {
+                "ime": "Student 6",
+                "index": 12350
+            }
+        ],
+        "prisustva": [
+            {
+                "sedmica": 1,
+                "predavanja": 2,
+                "vjezbe": 2,
+                "index": 12348
+            },
+            {
+                "sedmica": 2,
+                "predavanja": 3,
+                "vjezbe": 1,
+                "index": 12348
+            },
+            {
+                "sedmica": 1,
+                "predavanja": 2,
+                "vjezbe": 2,
+                "index": 12349
+            },
+            {
+                "sedmica": 2,
+                "predavanja": 3,
+                "vjezbe": 1,
+                "index": 12349
+            },
+            {
+                "sedmica": 1,
+                "predavanja": 2,
+                "vjezbe": 2,
+                "index": 12350
+            },
+            {
+                "sedmica": 3,
+                "predavanja": 3,
+                "vjezbe": 1,
+                "index": 12349
+            }
+        ],
+        "predmet": "Diskretna matematika",
+        "brojPredavanjaSedmicno": 3,
+        "brojVjezbiSedmicno": 3
+    },
+    {
+        "studenti": [
+            {
+                "ime": "Student 4",
+                "index": 12348
+            },
+            {
+                "ime": "Student 5",
+                "index": 12349
+            },
+            {
+                "ime": "Student 6",
+                "index": 12350
+            }
+        ],
+        "prisustva": [
+            {
+                "sedmica": 1,
+                "predavanja": 1,
+                "vjezbe": 1,
+                "index": 12349
+            }
+        ],
+        "predmet": "Razvoj programskih rješenja",
+        "brojPredavanjaSedmicno": 2,
+        "brojVjezbiSedmicno": 4
+    },
+    {
+        "studenti": [
+            {
+                "ime": "Student 7",
+                "index": 12351
+            },
+            {
+                "ime": "Student 8",
+                "index": 12352
+            },
+            {
+                "ime": "Student 9",
+                "index": 12353
+            },
+            {
+                "ime": "Student 10",
+                "index": 12354
+            }
+        ],
+        "prisustva": [
+            {
+                "sedmica": 5,
+                "predavanja": 1,
+                "vjezbe": 1,
+                "index": 12351
+            },
+            {
+                "sedmica": 4,
+                "predavanja": 3,
+                "vjezbe": 3,
+                "index": 12354
+            }
+        ],
+        "predmet": "Tehnike programiranja",
+        "brojPredavanjaSedmicno": 3,
+        "brojVjezbiSedmicno": 3
     }
 ]

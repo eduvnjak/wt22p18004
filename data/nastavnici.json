@@ -5,9 +5,37 @@
             "password_hash": "$2b$10$wXWtCFWiJa27KQ25QEaGseWXfaFHoJDWktNAHJ.25BzeyPP8JK7vW"
         },
         "predmeti": [
-            "PREDMET1",
-            "Razvoj mobilnih aplikacija",
-            "PREDMET3"
+            "Web tehnologije",
+            "Razvoj mobilnih aplikacija"
+        ]
+    },
+    {
+        "nastavnik": {
+            "username": "nastavnik2",
+            "password_hash": "$2b$10$VNTkYkaQAHBgLeWqjDh27e33EIlB6No5kzwLzP989sNoamcmYbx2K"
+        },
+        "predmeti": [
+            "Web tehnologije",
+            "Diskretna matematika"
+        ]
+    },
+    {
+        "nastavnik": {
+            "username": "nastavnik3",
+            "password_hash": "$2b$10$9JKWzbWPXxyrN1JD8VNJWOM9GAi68M4OheSCxRatIomyNjhVq7jvG"
+        },
+        "predmeti": [
+            "Razvoj programskih rješenja"
+        ]
+    },
+    {
+        "nastavnik": {
+            "username": "nastavnik4",
+            "password_hash": "$2b$10$ZkJ2pwN..iAE/Iwd1WLZielmI/dW1pgEWHWgB1LcAfxBqZB8rbyES"
+        },
+        "predmeti": [
+            "Tehnike programiranja",
+            "Sistemsko programiranje"
         ]
     }
 ]
