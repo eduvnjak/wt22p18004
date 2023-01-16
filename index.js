@@ -61,22 +61,6 @@ app.post('/logout', function (req, res) {
     res.json({ poruka: "Uspješan logout" })
     //ovako ili podatke (ili session?) na null
 })
-//ovo skloni na kraju
-// app.get('/sessionStatus', function (req, res) {
-//     // res.json({ nastavnik: req.session.username ?? "null" });
-//     res.write(JSON.stringify(req.sessionStore));
-//     res.write("\n\r" + JSON.stringify(req.session.maxAge));
-//     res.end("\n\r" + JSON.stringify(req.session));
-// });
-// app.get('/random', function (req, res) {
-//     console.log(req.sessionID)
-//     if (req.sessionID in req.sessionStore.sessions) {
-//         res.json({ text: "poznat" });
-//     }
-//     else {
-//         res.json({ text: "NEpoznat" });
-//     }
-// })
 app.get('/predmeti', function (req, res) {
     if (req.session.username) {
         res.json({ predmeti: req.session.predmeti });
@@ -85,7 +69,6 @@ app.get('/predmeti', function (req, res) {
     }
 });
 app.get('/predmeti/:NAZIV', function (req, res) {
-    //da li je potrebno decode route param
     if (!req.session.username) {
         res.status(403).json({ greska: "Nastavnik nije loginovan" });
         return;
