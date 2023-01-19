@@ -60,7 +60,7 @@ app.get('/predmeti', function (req, res) {
         res.status(403).json({ greska: "Nastavnik nije loginovan" });
     }
 });
-app.get('/predmeti/:NAZIV', function (req, res) {
+app.get('/predmeti/:NAZIV', async function (req, res) {
     if (!req.session.username) {
         res.status(403).json({ greska: "Nastavnik nije loginovan" });
         return;
@@ -69,16 +69,41 @@ app.get('/predmeti/:NAZIV', function (req, res) {
         res.status(403).json({ greska: `Niste nastavnik na predmetu ${req.params.NAZIV}` });
         return;
     }
-    fs.readFile("data/prisustva.json", (err, data) => {
-        if (err) {
-            res.status(500).json({ greska: "Greška pri čitanju podataka" });
+    try {
+        const predmet = await db.sequelize.models.predmet.findOne({ where: { naziv: req.params.NAZIV } });
+        if (predmet === null) {
+            //ovo se ne bi trebalo moći dogoditi
+            res.json(null);
             return;
         }
-        const svaPrisustva = JSON.parse(data);
-        var prisustvoObjekat = svaPrisustva.find((obj) => obj.predmet == req.params.NAZIV);
-        if (prisustvoObjekat === undefined) prisustvoObjekat = null;
-        res.json(prisustvoObjekat);
-    })
+        const studenti = await predmet.getStudenti();
+        // ako nema studenata onda nema ni prisustva tako da se nista ne može ispisati (nema podataka)
+        if (!studenti.length) {
+            res.json(null);
+            return;
+        }
+        // ako nema prisustva trebalo bi se nešto bar ispisati
+        const prisustva = await predmet.getPrisustva();
+        const objekat = {
+            studenti: studenti.map((student) => ({
+                ime: student.ime,
+                index: student.index
+            })),
+            prisustva: prisustva ? prisustva.map((prisustvo) => ({
+                sedmica: prisustvo.sedmica,
+                predavanja: prisustvo.predavanja,
+                vjezbe: prisustvo.vjezbe,
+                index: prisustvo.studentIndex
+            })) : [],
+            predmet: predmet.naziv,
+            brojPredavanjaSedmicno: predmet.brojPredavanjaSedmicno,
+            brojVjezbiSedmicno: predmet.brojVjezbiSedmicno
+        }
+        res.json(objekat);
+    } catch (error) {
+        console.log(error);
+        res.json(500).json({ greska: "Greška pri čitanju podataka" })
+    }
 });
 app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
     if (!req.session.username) {
