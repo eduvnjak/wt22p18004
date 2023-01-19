@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
+const db = require('./baza.js');
 
 const app = express();
 
@@ -19,38 +20,29 @@ app.use('/css', express.static('public/css'));
 app.use('/icons', express.static('public/icons'));
 app.use('/scripts', express.static('public/scripts'));
 
-app.post('/login', function (req, res) {
+app.post('/login', async function (req, res) {
     if (req.body.username && req.body.password) {
-        // console.log("poslani parametri");
-        fs.readFile("data/nastavnici.json", (err, data) => {
-            if (err) {
-                res.status(500).json({ poruka: "Neuspješna prijava" });
+        try {
+            // console.log("poslani parametri");
+            const nastavnik = await db.sequelize.models.nastavnik.findOne({ where: { username: req.body.username } });
+            if (nastavnik === null) {
+                res.status(403).json({ poruka: "Neuspješna prijava" });
+                return;
             }
-            // console.log("procitani nastavnici.json; " + data);
-            const nastavniciObjekat = JSON.parse(data);
-            // console.log(nastavniciObjekat);
-            //ovdje probaj onaj destructuring
-            const nastavnikObjekat = nastavniciObjekat.find((user) => user.nastavnik.username == req.body.username)
-            if (nastavnikObjekat) {
-                // console.log("nastavnik pronađen" + JSON.stringify(nastavnikObjekat));
-                bcrypt.compare(req.body.password, nastavnikObjekat.nastavnik.password_hash, function (err, result) {
-                    if (err) {
-                        res.status(500).json({ poruka: "Neuspješna prijava" });
-                        return;
-                    }
-                    if (result) {
-                        req.session.username = req.body.username;
-                        req.session.predmeti = nastavnikObjekat.predmeti;
-                        res.json({ poruka: "Uspješna prijava" });
-                    } else {
-                        res.status(403).json({ poruka: "Neuspješna prijava" });
-
-                    }
-                })
+            const match = await bcrypt.compare(req.body.password, nastavnik.password_hash);
+            if (match) {
+                const predmeti = await nastavnik.getPredmeti();
+                req.session.username = req.body.username;
+                req.session.predmeti = predmeti.map((predmet) => predmet.naziv);
+                res.json({ poruka: "Uspješna prijava" });
             } else {
                 res.status(403).json({ poruka: "Neuspješna prijava" });
+                return;
             }
-        });
+        } catch (error) {
+            console.log(error)
+            res.status(500).json({ poruka: "Neuspješna prijava" });
+        }
     } else {
         // console.log("nisu poslani parametri");
         res.status(400).json({ poruka: "Neuspješna prijava" });
