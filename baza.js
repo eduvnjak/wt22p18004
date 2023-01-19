@@ -23,19 +23,20 @@ db.student.belongsToMany(db.predmet, { through: "StudentPredmet" });
 db.predmet.belongsToMany(db.student, { through: "StudentPredmet" });
 
 db.predmet.hasMany(db.prisustvo, { foreignKey: { allowNull: false } });
-db.prisustvo.belongsTo(db.predmet);
+db.prisustvo.belongsTo(db.predmet, {
+    foreignKey: { unique: "composite" }
+});
 
 //ovdje moze foreign key i studentId
 db.prisustvo.belongsTo(db.student, {
     targetKey: "index",
     foreignKey: {
         name: "studentIndex",
-        allowNull: false
+        allowNull: false,
+        unique: "composite"
     }
 });
 //da li da postavim comoposite key umjesto primary keya
-
-db.sequelize.sync({ force: true });
 
 // console.log(Object.getOwnPropertyNames(db.predmet));
 // console.log(db.predmet.prototype);
