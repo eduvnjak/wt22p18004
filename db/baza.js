@@ -10,10 +10,10 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //import modela
-db.nastavnik = require("./nastavnik.js")(sequelize);
-db.predmet = require("./predmet.js")(sequelize);
-db.student = require("./student.js")(sequelize);
-db.prisustvo = require("./prisustvo.js")(sequelize);
+db.nastavnik = require("../models/nastavnik.js")(sequelize);
+db.predmet = require("../models/predmet.js")(sequelize);
+db.student = require("../models/student.js")(sequelize);
+db.prisustvo = require("../models/prisustvo.js")(sequelize);
 
 
 db.nastavnik.belongsToMany(db.predmet, { through: "NastavnikPredmet" });
@@ -36,10 +36,6 @@ db.prisustvo.belongsTo(db.student, {
         unique: "composite"
     }
 });
-//da li da postavim comoposite key umjesto primary keya
-
-// console.log(Object.getOwnPropertyNames(db.predmet));
-// console.log(db.predmet.prototype);
-// console.log(db.prisustvo.prototype);
+// da li da postavim comoposite key umjesto primary keya
 
 module.exports = db;

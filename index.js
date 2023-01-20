@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const db = require('./baza.js');
+const db = require('./db/baza.js');
 
 const app = express();
 
