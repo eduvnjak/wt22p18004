@@ -1,0 +1,1 @@
+Kreiranje tabela u bazi i popunjavanje početnim podacima pokretanjem db/inicijalizacija.js

@@ -275,5 +275,6 @@ db.sequelize.sync({ force: true }).then(async () => {
         predmetId: tp.id,
         index: student10.index
     });
+    console.log("Završeno kreiranje tabela i popunjavanje početnim podacima.");
     process.exit();
 })
