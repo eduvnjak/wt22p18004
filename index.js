@@ -126,9 +126,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
             return;
         }
         // slučajevi student ne postoji i student nije na predmetu
-        // console.log(typeof req.params.index); string
-        const student = await db.sequelize.models.student.findOne({ where: { index: req.params.index } });
-        //parse int na req.params.index ??
+        const student = await db.sequelize.models.student.findOne({ where: { index: parseInt(req.params.index) } });
         if (student == null || ! await predmet.hasStudent(student)) {
             res.status(400).json({ greska: `Ne postoji student sa indexom ${req.params.index} na predmetu ${req.params.NAZIV}` });
             return;
@@ -145,9 +143,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
             res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
             return;
         }
-        var prisustvo = (await predmet.getPrisustva()).find((obj) => obj.sedmica == req.body.sedmica && obj.index == req.params.index);
-        // moze li ovaj poziv gore ovako
-        // da li ispod null ili undefined
+        var prisustvo = (await predmet.getPrisustva()).find((obj) => obj.sedmica == req.body.sedmica && obj.index == parseInt(req.params.index));
         if (prisustvo === undefined) {
             prisustvo = await db.sequelize.models.prisustvo.create({
                 sedmica: req.body.sedmica,
@@ -162,7 +158,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
                 vjezbe: req.body.vjezbe
             })
         }
-        const studenti = await predmet.getStudenti(); 
+        const studenti = await predmet.getStudenti();
         const prisustva = await predmet.getPrisustva();
         const objekat = {
             studenti: studenti.map((student) => ({
