@@ -105,7 +105,7 @@ app.get('/predmeti/:NAZIV', async function (req, res) {
         res.json(500).json({ greska: "Greška pri čitanju podataka" })
     }
 });
-app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
+app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
     if (!req.session.username) {
         res.status(403).json({ greska: "Nastavnik nije loginovan" });
         return;
@@ -118,18 +118,18 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
         res.status(400).json({ greska: "Nepravilno tijelo zahtjeva" });
         return;
     }
-    fs.readFile("data/prisustva.json", (err, data) => {
-        if (err) {
-            res.status(500).json({ greska: "Greška pri čitanju podataka" });
-            return;
-        }
-        const svaPrisustva = JSON.parse(data);
-        const prisustvoObjekat = svaPrisustva.find((obj) => obj.predmet == req.params.NAZIV);
-        if (prisustvoObjekat === undefined) {
+    try {
+        const predmet = await db.sequelize.models.predmet.findOne({ where: { naziv: req.params.NAZIV } });
+        if (predmet === null) {
+            //ovo se ne bi trebalo moći dogoditi
             res.status(400).json({ greska: `Ne postoji predmet ${req.params.NAZIV}` }); //ovdje mozda 404
             return;
         }
-        if (prisustvoObjekat.studenti.find((student) => student.index === parseInt(req.params.index)) === undefined) {
+        // slučajevi student ne postoji i student nije na predmetu
+        // console.log(typeof req.params.index); string
+        const student = await db.sequelize.models.student.findOne({ where: { index: req.params.index } });
+        //parse int na req.params.index ??
+        if (student == null || ! await predmet.hasStudent(student)) {
             res.status(400).json({ greska: `Ne postoji student sa indexom ${req.params.index} na predmetu ${req.params.NAZIV}` });
             return;
         }
@@ -137,35 +137,52 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', function (req, res) {
             res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
             return;
         }
-        if (req.body.predavanja < 0 || req.body.predavanja > prisustvoObjekat.brojPredavanjaSedmicno) {
+        if (req.body.predavanja < 0 || req.body.predavanja > predmet.brojPredavanjaSedmicno) {
             res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
             return;
         }
-        if (req.body.vjezbe < 0 || req.body.vjezbe > prisustvoObjekat.brojVjezbiSedmicno) {
+        if (req.body.vjezbe < 0 || req.body.vjezbe > predmet.brojVjezbiSedmicno) {
             res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
             return;
         }
-        const prisustvo = prisustvoObjekat.prisustva.find((obj) => obj.index == req.params.index && obj.sedmica == req.body.sedmica);
+        var prisustvo = (await predmet.getPrisustva()).find((obj) => obj.sedmica == req.body.sedmica && obj.studentIndex == req.params.index);
+        // moze li ovaj poziv gore ovako
+        // da li ispod null ili undefined
         if (prisustvo === undefined) {
-            const novoPrisustvo = {
+            prisustvo = await db.sequelize.models.prisustvo.create({
                 sedmica: req.body.sedmica,
                 predavanja: req.body.predavanja,
                 vjezbe: req.body.vjezbe,
-                index: parseInt(req.params.index)
-            }
-            prisustvoObjekat.prisustva.push(novoPrisustvo);
+                predmetId: predmet.id,
+                studentIndex: student.index
+            });
         } else {
-            prisustvo.predavanja = req.body.predavanja;
-            prisustvo.vjezbe = req.body.vjezbe;
+            await prisustvo.update({
+                predavanja: req.body.predavanja,
+                vjezbe: req.body.vjezbe
+            })
         }
-        // console.log(JSON.stringify(svaPrisustva));
-        fs.writeFile("data/prisustva.json", JSON.stringify(svaPrisustva), (err) => {
-            if (err) {
-                res.status(500).json({ greska: "Greška pri pisanju podataka" });
-                return;
-            }
-            res.json(prisustvoObjekat);
-        })
-    })
+        const studenti = await predmet.getStudenti(); 
+        const prisustva = await predmet.getPrisustva();
+        const objekat = {
+            studenti: studenti.map((student) => ({
+                ime: student.ime,
+                index: student.index
+            })),
+            prisustva: prisustva.length ? prisustva.map((prisustvo) => ({
+                sedmica: prisustvo.sedmica,
+                predavanja: prisustvo.predavanja,
+                vjezbe: prisustvo.vjezbe,
+                index: prisustvo.studentIndex
+            })) : [],
+            predmet: predmet.naziv,
+            brojPredavanjaSedmicno: predmet.brojPredavanjaSedmicno,
+            brojVjezbiSedmicno: predmet.brojVjezbiSedmicno
+        }
+        res.json(objekat);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ greska: "Greška pri čitanju podataka" });
+    }
 });
 app.listen(3000);
