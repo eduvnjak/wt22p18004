@@ -37,7 +37,7 @@ db.prisustvo.belongsTo(db.predmet, {
 db.prisustvo.belongsTo(db.student, {
     targetKey: "index",
     foreignKey: {
-        name: "studentIndex",
+        name: "index",
         allowNull: false,
         unique: "composite"
     }

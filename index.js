@@ -93,7 +93,7 @@ app.get('/predmeti/:NAZIV', async function (req, res) {
                 sedmica: prisustvo.sedmica,
                 predavanja: prisustvo.predavanja,
                 vjezbe: prisustvo.vjezbe,
-                index: prisustvo.studentIndex
+                index: prisustvo.index
             })) : [],
             predmet: predmet.naziv,
             brojPredavanjaSedmicno: predmet.brojPredavanjaSedmicno,
@@ -145,7 +145,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
             res.status(400).json({ greska: "Nepravilni parametri zahtjeva" });
             return;
         }
-        var prisustvo = (await predmet.getPrisustva()).find((obj) => obj.sedmica == req.body.sedmica && obj.studentIndex == req.params.index);
+        var prisustvo = (await predmet.getPrisustva()).find((obj) => obj.sedmica == req.body.sedmica && obj.index == req.params.index);
         // moze li ovaj poziv gore ovako
         // da li ispod null ili undefined
         if (prisustvo === undefined) {
@@ -154,7 +154,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
                 predavanja: req.body.predavanja,
                 vjezbe: req.body.vjezbe,
                 predmetId: predmet.id,
-                studentIndex: student.index
+                index: student.index
             });
         } else {
             await prisustvo.update({
@@ -173,7 +173,7 @@ app.post('/prisustvo/predmet/:NAZIV/student/:index', async function (req, res) {
                 sedmica: prisustvo.sedmica,
                 predavanja: prisustvo.predavanja,
                 vjezbe: prisustvo.vjezbe,
-                index: prisustvo.studentIndex
+                index: prisustvo.index
             })) : [],
             predmet: predmet.naziv,
             brojPredavanjaSedmicno: predmet.brojPredavanjaSedmicno,

@@ -108,91 +108,91 @@ db.sequelize.sync({ force: true }).then(async () => {
         predavanja: 2,
         vjezbe: 2,
         predmetId: rma.id,
-        studentIndex: student1.index
+        index: student1.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 13,
         predavanja: 2,
         vjezbe: 2,
         predmetId: rma.id,
-        studentIndex: student2.index
+        index: student2.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 14,
         predavanja: 2,
         vjezbe: 0,
         predmetId: rma.id,
-        studentIndex: student1.index
+        index: student1.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 14,
         predavanja: 0,
         vjezbe: 0,
         predmetId: rma.id,
-        studentIndex: student2.index
+        index: student2.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 15,
         predavanja: 1,
         vjezbe: 1,
         predmetId: rma.id,
-        studentIndex: student2.index
+        index: student2.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 12,
         predavanja: 2,
         vjezbe: 1,
         predmetId: rma.id,
-        studentIndex: student1.index
+        index: student1.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 15,
         predavanja: 0,
         vjezbe: 2,
         predmetId: rma.id,
-        studentIndex: student1.index
+        index: student1.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 15,
         predavanja: 1,
         vjezbe: 2,
         predmetId: rma.id,
-        studentIndex: student3.index
+        index: student3.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 14,
         predavanja: 1,
         vjezbe: 1,
         predmetId: rma.id,
-        studentIndex: student3.index
+        index: student3.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 13,
         predavanja: 1,
         vjezbe: 0,
         predmetId: rma.id,
-        studentIndex: student3.index
+        index: student3.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 11,
         predavanja: 3,
         vjezbe: 4,
         predmetId: rma.id,
-        studentIndex: student2.index
+        index: student2.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 12,
         predavanja: 1,
         vjezbe: 0,
         predmetId: rma.id,
-        studentIndex: student2.index
+        index: student2.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 12,
         predavanja: 0,
         vjezbe: 1,
         predmetId: rma.id,
-        studentIndex: student3.index
+        index: student3.index
     });
     // za wt
     await db.sequelize.models.prisustvo.create({
@@ -200,14 +200,14 @@ db.sequelize.sync({ force: true }).then(async () => {
         predavanja: 2,
         vjezbe: 2,
         predmetId: wt.id,
-        studentIndex: student1.index
+        index: student1.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 2,
         predavanja: 3,
         vjezbe: 1,
         predmetId: wt.id,
-        studentIndex: student2.index
+        index: student2.index
     });
     //za dm
     await db.sequelize.models.prisustvo.create({
@@ -215,42 +215,42 @@ db.sequelize.sync({ force: true }).then(async () => {
         predavanja: 2,
         vjezbe: 2,
         predmetId: dm.id,
-        studentIndex: student4.index
+        index: student4.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 2,
         predavanja: 3,
         vjezbe: 1,
         predmetId: dm.id,
-        studentIndex: student4.index
+        index: student4.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 1,
         predavanja: 2,
         vjezbe: 2,
         predmetId: dm.id,
-        studentIndex: student5.index
+        index: student5.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 2,
         predavanja: 3,
         vjezbe: 1,
         predmetId: dm.id,
-        studentIndex: student5.index
+        index: student5.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 1,
         predavanja: 2,
         vjezbe: 2,
         predmetId: dm.id,
-        studentIndex: student6.index
+        index: student6.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 3,
         predavanja: 3,
         vjezbe: 1,
         predmetId: dm.id,
-        studentIndex: student5.index
+        index: student5.index
     });
     // za rpr
     await db.sequelize.models.prisustvo.create({
@@ -258,7 +258,7 @@ db.sequelize.sync({ force: true }).then(async () => {
         predavanja: 1,
         vjezbe: 1,
         predmetId: rpr.id,
-        studentIndex: student5.index
+        index: student5.index
     });
     // za tp
     await db.sequelize.models.prisustvo.create({
@@ -266,14 +266,14 @@ db.sequelize.sync({ force: true }).then(async () => {
         predavanja: 1,
         vjezbe: 1,
         predmetId: tp.id,
-        studentIndex: student7.index
+        index: student7.index
     });
     await db.sequelize.models.prisustvo.create({
         sedmica: 4,
         predavanja: 3,
         vjezbe: 3,
         predmetId: tp.id,
-        studentIndex: student10.index
+        index: student10.index
     });
     process.exit();
 })
