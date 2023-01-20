@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const sequelize = new Sequelize("wt22", "root", "password", {
     host: "localhost",
     dialect: "mysql",
-    logging: false,
+    logging: true,
     pool: {
         max: 5,
         min: 0,
@@ -30,7 +30,8 @@ db.predmet.belongsToMany(db.student, { through: "StudentPredmet" });
 
 db.predmet.hasMany(db.prisustvo, { foreignKey: { allowNull: false } });
 db.prisustvo.belongsTo(db.predmet, {
-    foreignKey: { unique: "composite" }
+    foreignKey: { unique: "composite" },
+    onDelete: 'CASCADE'
 });
 
 //ovdje moze foreign key i studentId
@@ -40,7 +41,8 @@ db.prisustvo.belongsTo(db.student, {
         name: "index",
         allowNull: false,
         unique: "composite"
-    }
+    },
+    onDelete: 'CASCADE'
 });
 // da li da postavim comoposite key umjesto primary keya
 
