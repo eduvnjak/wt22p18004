@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize("wt22", "root", "password", {
-    host: "localhost",
-    dialect: "mysql",
+const sequelize = new Sequelize({
+    storage: "db.sqlite",
+    dialect: "sqlite",
     logging: false,
     pool: {
         max: 5,
